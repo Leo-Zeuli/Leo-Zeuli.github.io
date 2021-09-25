@@ -1,0 +1,124 @@
+@font-face {
+  font-family: "Tangerine";
+  src: url("Tangerine-Bold.ttf");
+}
+
+hr {
+  background-color: black;
+  border-color: black;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  width: 100%;
+  border-width: 1px;
+}
+
+a.name {
+  color: black;
+  font-family: Tangerine;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+  font-size: 100px;
+  margin-top: 0.5em;
+  margin-bottom: 0.2em;
+}
+
+a.header {
+  color: black;
+  font-size: 25px;
+  font-family: Times New Roman;
+  text-decoration: none;
+  margin-left: 1em;
+  margin-right: 1em;
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  background-color: white;
+  position: absolute;
+  margin-left: 1.5em;
+  overflow: auto;
+  z-index: 1;
+  border-left-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-width: thin;
+  box-shadow: 3px 3px 3px 0 rgba(0,0,0,0.1);
+}
+
+.dropdown-content a {
+  color: black;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  margin: 5px;
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.dropdown-content a:hover {color: red; border-color: black;}
+.header:hover {color: red;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.general {
+  text-align: justify;
+  font-size: 20px;
+  max-width: 600px;
+  margin: auto;
+  margin-bottom: 1em;
+}
+
+.email {
+  text-decoration: none;
+  color: black;
+}
+
+.email:hover {color: red}
+
+.feature-header {
+  font-family: Times New Roman;
+  font-weight: normal;
+  text-align: center;
+  font-size: 27px;
+  max-width: 800px;
+  margin-bottom: -10px;
+}
+
+.feature-subheader {
+  font-family: Times New Roman;
+  font-weight: normal;
+  font-style: italic;
+  text-align: center;
+  font-size: 20px;
+  max-width: 800px;
+  margin-bottom: 1em;
+}
+
+img.feature-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 800px;
+  height: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+img.star {
+  width: 40px;
+  height: 40px;
+}
+
+.half {
+  width: 20px;
+  height: 40px;
+  overflow: hidden;
+}

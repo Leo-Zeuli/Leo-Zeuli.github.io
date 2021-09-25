@@ -1,2 +1,2 @@
-# Leo-Zeuli.github.io
-Ramblings on film and related topics
+# LeoZeuli.github.io
+Rambling about film and related topics
