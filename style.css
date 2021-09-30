@@ -118,7 +118,13 @@ img.feature-image {
   text-align: left;
   margin-top: -0.75em;
   margin-bottom: 1em;
-  font-size: 18px;
+  font-size: 15px;
+}
+
+.synopsis-caption {
+  color: grey;
+  text-align: left;
+  font-size: 15px;
 }
 
 img.star {
