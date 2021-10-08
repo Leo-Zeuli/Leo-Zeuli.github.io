@@ -3,14 +3,13 @@
   src: url("Tangerine-Bold.ttf");
 }
 
-hr {
-  background-color: black;
-  border-color: black;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  width: 100%;
-  border-width: 1px;
+.HTTP404 {
+  font-size: 100px;
+  text-align: center;
+  font-family: Tangerine;
 }
+
+/* Navigation-Bar CSS */
 
 a.name {
   color: black;
@@ -68,13 +67,9 @@ a.header {
 
 .dropdown:hover .dropdown-content {display: block;}
 
-.general {
-  text-align: justify;
-  font-size: 20px;
-  max-width: 600px;
-  margin: auto;
-  margin-bottom: 1em;
-}
+/* Navigation-Bar CSS */
+
+/* About CSS */
 
 .email {
   text-decoration: none;
@@ -82,6 +77,18 @@ a.header {
 }
 
 .email:hover {color: red}
+
+/* About CSS */
+
+/* Feature CSS */
+
+.general {
+  text-align: justify;
+  font-size: 20px;
+  max-width: 600px;
+  margin: auto;
+  margin-bottom: 1em;
+}
 
 .feature-header {
   font-family: Times New Roman;
@@ -121,11 +128,6 @@ img.feature-image {
   font-size: 15px;
 }
 
-.synopsis-caption {
-  color: grey;
-  font-size: 15px;
-}
-
 img.star {
   width: 40px;
   height: 40px;
@@ -136,3 +138,79 @@ img.star {
   height: 40px;
   overflow: hidden;
 }
+
+/* Feature CSS */
+
+/* Synopsis CSS */
+
+.synopsis-caption {
+  color: grey;
+  font-size: 15px;
+}
+
+.synopsis-photo {
+  border-radius: 5px;
+  width: 300px; 
+  height: 200px;
+  object-fit: cover;
+}
+
+img.synopsis-photo-wide {
+  border-radius: 5px;
+  width: 800px;
+  height: 250px;
+  object-fit: cover;
+}
+
+img.synopsis-photo-compact {
+  border-radius: 5px;
+  width: 260px;
+  height: 150px;
+  object-fit: cover;
+}
+
+a.feature-link {
+  text-decoration: none;
+  color: black;
+}
+
+.table-styling {
+  margin: auto; 
+  max-width: 800px;
+}
+.table-styling-wide {
+  margin: auto; 
+  max-width: 800px;
+  border-spacing: 0px;
+}
+.table-styling-compact {
+  margin: auto;
+  max-width: 260px;
+  border-spacing: 0px;
+}
+
+.synopsis-header{
+  font-weight: normal;
+  text-align: left;
+  font-size: 27px;
+}
+
+.synopsis-header-compact {
+  font-weight: normal;
+  text-align: left;
+  font-size: 27px;
+}
+
+.synopsis-subheader {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 20px;
+}
+
+.synopsis-body-wide {
+  margin-top: 0;
+  padding-top: 5px;
+  margin-bottom: 0;
+}
+
+/* Synopsis CSS */
