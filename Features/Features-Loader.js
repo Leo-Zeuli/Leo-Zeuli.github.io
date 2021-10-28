@@ -66,6 +66,8 @@ function load_more(source) {
   } else if (source == "reviews") {
     load_synopses(6,"r");
   } else if (source == "analyses") {
-    load_synopses(12,"a");
+    load_synopses(6,"a");
+  } else if (source == "features") {
+    load_synopses(6);
   }
 };
