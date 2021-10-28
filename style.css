@@ -3,6 +3,18 @@
   src: url("Tangerine-Bold.ttf");
 }
 
+.load-more {
+  margin-top: 20px;
+  font-family: Tangerine;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+.load-more:hover {
+  color: red;
+}
+
 .HTTP404 {
   font-size: 100px;
   text-align: center;
@@ -143,74 +155,117 @@ img.star {
 
 /* Synopsis CSS */
 
+a.feature-link {
+  text-decoration: none;
+  color: black;
+}
 .synopsis-caption {
   color: grey;
   font-size: 15px;
 }
 
-.synopsis-photo {
+/* Compact */
+/* Index Level */
+.compact-flexbox-container {
+  width: min(100%, 800px);
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.compact-alignment {
+  flex-grow: 1;
+  flex-basis: 205px;
+}
+/* Index Level */
+.compact-container {
+  max-width: 300px;
+}
+.compact-image-container {
+  width: 100%;
+}
+img.compact-synopsis-image {
+  height: 150px;
   border-radius: 5px;
-  width: 300px; 
+  width: 100%;
+  object-fit: cover;
+}
+.compact-synopsis-header {
+  font-weight: normal;
+  font-size: 20px;
+  text-align: left;
+  margin: auto
+}
+/* Compact */
+
+/* */
+.flexbox-container {
+  width: min(100%, 800px);
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 10px;
+}
+.image-container {
+  flex-grow: 1;
+  flex-basis: 175px;
+}
+.synopsis-container {
+  flex-grow: 1;
+  flex-basis: 365px;
+  margin: auto;
+  text-align: left;
+}
+.synopsis {
+  margin-top: 10px;
+}
+img.synopsis-photo {
+  border-radius: 5px;
+  width: 100%;
   height: 200px;
   object-fit: cover;
 }
-
-img.synopsis-photo-wide {
-  border-radius: 5px;
-  width: 800px;
-  height: 250px;
-  object-fit: cover;
-}
-
-img.synopsis-photo-compact {
-  border-radius: 5px;
-  width: 260px;
-  height: 150px;
-  object-fit: cover;
-}
-
-a.feature-link {
-  text-decoration: none;
-  color: black;
-}
-
-.table-styling {
-  margin: auto; 
-  max-width: 800px;
-}
-.table-styling-wide {
-  margin: auto; 
-  max-width: 800px;
-  border-spacing: 0px;
-}
-.table-styling-compact {
-  margin: auto;
-  max-width: 260px;
-  border-spacing: 0px;
-}
-
 .synopsis-header{
   font-weight: normal;
   text-align: left;
   font-size: 27px;
 }
-
-.synopsis-header-compact {
-  font-weight: normal;
-  text-align: left;
-  font-size: 27px;
-}
-
 .synopsis-subheader {
   font-weight: normal;
   font-style: italic;
   font-size: 20px;
 }
+/* */
 
-.synopsis-body-wide {
+/* Wide */
+.wide-flexbox-container {
+  width: min(100%, 800px);
+  margin: auto;
+}
+img.wide-synopsis-image {
+  border-radius: 5px;
+  width: min(800px, 100%);
+  height: 250px;
+  object-fit: cover;
+}
+.wide-synopsis-container {
+  text-align: left;
+}
+.wide-synopsis-header {
+  font-weight: normal;
+  text-align: left;
+  font-size: 27px;
+}
+.wide-synopsis-body {
   margin-top: 0;
   padding-top: 5px;
   margin-bottom: 0;
 }
+.wide-synopsis-subheader {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 20px;
+}
+/* Wide */
 
 /* Synopsis CSS */
