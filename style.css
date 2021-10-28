@@ -125,7 +125,7 @@ img.feature-image {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 800px;
+  width: min(100%,800px);
   height: auto;
   margin-top: 1em;
   margin-bottom: 1em;
