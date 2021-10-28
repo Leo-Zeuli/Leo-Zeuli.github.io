@@ -1,3 +1,5 @@
+#Delete "Previous Markdown.txt" to clear the data upon opening the program
+
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
@@ -23,17 +25,20 @@ def select_crown_image():
     file_path = filedialog.askopenfilename(initialdir="/Desktop", title="Select Crown Image",
                                              filetypes=(("jpeg files", "*.jpeg"), ("jpg files", "*.jpg"), ("png files", "*.png")))
     crown_image_path.set(file_path)
+
+def process_router():
+    istesting = bool(testing.get())
+    if istesting:
+        feature_image_path_tuple = os.path.splitext(feature_image_path.get())
+        print(feature_image_path_tuple)
+    else:
+        process()
 def process():
     #Gather Variables
-    istesting = bool(testing.get())
     film_specific = not bool(article_subject.get())
     star_rating = float(rating.get())
 
     #article_txt_path.get()
-    print(article_txt_path.get())
-    #feature_image_path.get()
-    #wide_image_path.get()
-    #crown_image_path.get()
 
     folder_path = os.path.abspath(os.getcwd())
     full_folder_path = folder_path+"/Features/"+structure_title.get().strip()
@@ -63,6 +68,47 @@ def process():
     synopsis_compact.write(synopsis_compact_text)
     synopsis_compact.close()
     #Synopsis Compact
+
+    #Synopsis
+    synopsis_template = open(folder_path+"/Features/Template/Synopsis Template.html","r")
+    synopsis_text = synopsis_template.read()
+    synopsis_template.close()
+    for variable_name, variable in variables_dict.iteritems():
+        synopsis_text = synopsis_text.replace(variable_name, variable)
+    synopsis = open(full_folder_path+"/Synopsis.html","w")
+    synopsis.write(synopsis_text)
+    synopsis.close()
+    #Synopsis
+
+    #Synopsis Wide
+    synopsis_wide_template = open(folder_path+"/Features/Template/Synopsis Wide Template.html","r")
+    synopsis_wide_text = synopsis_wide_template.read()
+    synopsis_wide_template.close()
+    for variable_name, variable in variables_dict.iteritems():
+        synopsis_wide_text = synopsis_wide_text.replace(variable_name, variable)
+    synopsis_wide = open(full_folder_path+"/Synopsis Wide.html","w")
+    synopsis_wide.write(synopsis_wide_text)
+    synopsis_wide.close()
+    #Synopsis Wide
+
+    #Moving Photos
+    feature_image_path_tuple = os.path.splitext(feature_image_path.get())
+    wide_image_path_tuple = os.path.splitext(wide_image_path.get())
+    crown_image_path_tuple = os.path.splitext(crown_image_path.get())
+    os.mkdir(folder_path+"/Photos/Features/"+variables_dict["structure_title"])
+    os.replace("".join(feature_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+feature_image_path_tuple[1])
+    os.replace("".join(wide_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+" Synopsis Wide"+wide_image_path_tuple[1])
+    os.replace("".join(crown_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+" Star"+crown_image_path_tuple[1])
+    #Moving Photos 
+
+def load_markdown():
+    pass
+def save_markdown():
+    previous_markdown = open("Previous Markdown.txt","r+")
+    previous_markdown_dictionary = eval(previous_markdown.read().strip())
+    previous_markdown.truncate(0)
+    previous_markdown.write(str(previous_markdown_dictionary))
+    previous_markdown.close()
 
 testing_frame = Frame(window)
 testing_frame.pack(pady=(5,2), anchor="center")
@@ -151,6 +197,25 @@ rating.set(ratings[0])
 OptionMenu(crown_frame, rating, *ratings).pack(side="left")
 Button(crown_frame, text ="Directory Select", command = select_crown_image).pack(side="left")
 
+markdown_processes_frame = Frame(window)
+markdown_processes_frame.pack(padx=(10, 10), pady=(2,2), anchor="center")
+Label(markdown_processes_frame, text="→", bg="white", fg="red").pack(side="left")
+Label(markdown_processes_frame, text="→", bg="white", fg="orange").pack(side="left")
+Label(markdown_processes_frame, text="→", bg="white", fg="yellow").pack(side="left")
+Label(markdown_processes_frame, text="→", bg="white", fg="lawn green").pack(side="left")
+Label(markdown_processes_frame, text="→", bg="white", fg="cyan").pack(side="left")
+Label(markdown_processes_frame, text="→", bg="white", fg="blue").pack(side="left")
+Label(markdown_processes_frame, text="→", bg="white", fg="purple").pack(side="left")
+Button(markdown_processes_frame, text ="Save Markdown", command=save_markdown).pack(side="left")
+Button(markdown_processes_frame, text ="Load Markdown", command=load_markdown).pack(side="left")
+Label(markdown_processes_frame, text="←", bg="white", fg="purple").pack(side="left")
+Label(markdown_processes_frame, text="←", bg="white", fg="blue").pack(side="left")
+Label(markdown_processes_frame, text="←", bg="white", fg="cyan").pack(side="left")
+Label(markdown_processes_frame, text="←", bg="white", fg="lawn green").pack(side="left")
+Label(markdown_processes_frame, text="←", bg="white", fg="yellow").pack(side="left")
+Label(markdown_processes_frame, text="←", bg="white", fg="orange").pack(side="left")
+Label(markdown_processes_frame, text="←", bg="white", fg="red").pack(side="left")
+
 process_frame = Frame(window)
 process_frame.pack(padx=(10, 10), pady=(2,2), anchor="center")
 Label(process_frame, text="→", bg="white", fg="red").pack(side="left")
@@ -160,7 +225,7 @@ Label(process_frame, text="→", bg="white", fg="lawn green").pack(side="left")
 Label(process_frame, text="→", bg="white", fg="cyan").pack(side="left")
 Label(process_frame, text="→", bg="white", fg="blue").pack(side="left")
 Label(process_frame, text="→", bg="white", fg="purple").pack(side="left")
-Button(process_frame, text ="Process", command=process).pack(side="left")
+Button(process_frame, text ="Process", command=process_router).pack(side="left")
 Label(process_frame, text="←", bg="white", fg="purple").pack(side="left")
 Label(process_frame, text="←", bg="white", fg="blue").pack(side="left")
 Label(process_frame, text="←", bg="white", fg="cyan").pack(side="left")
