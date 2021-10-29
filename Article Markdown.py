@@ -56,8 +56,9 @@ def select_crown_image():
 def process_router():
     istesting = bool(testing.get())
     if istesting:
-        feature_image_path_tuple = os.path.splitext(feature_image_path.get())
-        print(feature_image_path_tuple)
+        variables_dict_keys = list(variables_dict.keys())
+        variables_dict_keys.sort(reverse = True, key = (lambda dict_key: len(dict_key)))
+        print(variables_dict_keys)
     else:
         process()
 def process():
@@ -69,15 +70,18 @@ def process():
     if not os.path.exists(full_folder_path):
         os.mkdir(full_folder_path)
     #Make Folder
-        
+
+    variables_dict_keys = list(variables_dict.keys())
+    variables_dict_keys.sort(reverse = True, key = (lambda dict_key: len(dict_key)))
+    
     #Synopsis Compact
     synopsis_compact_template = open(folder_path+"/Features/Template/Synopsis Compact Template.html","r")
     synopsis_compact_text = synopsis_compact_template.read()
     synopsis_compact_template.close()
     if not bool(variables_dict["article_subject"]):
-        synopsis_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
-    for variable_name, variable in variables_dict.iteritems():
-        synopsis_compact_text = synopsis_compact_text.replace(variable_name, variable)
+        synopsis_compact_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
+    for variable_name in variables_dict_keys:
+        synopsis_compact_text = synopsis_compact_text.replace(variable_name, str(variables_dict[variable_name]))
     synopsis_compact = open(full_folder_path+"/Synopsis Compact.html","w")
     synopsis_compact.write(synopsis_compact_text)
     synopsis_compact.close()
@@ -89,8 +93,8 @@ def process():
     synopsis_template.close()
     if not bool(variables_dict["article_subject"]):
         synopsis_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
-    for variable_name, variable in variables_dict.iteritems():
-        synopsis_text = synopsis_text.replace(variable_name, variable)
+    for variable_name in variables_dict_keys:
+        synopsis_text = synopsis_text.replace(variable_name, str(variables_dict[variable_name]))
     synopsis = open(full_folder_path+"/Synopsis.html","w")
     synopsis.write(synopsis_text)
     synopsis.close()
@@ -102,27 +106,49 @@ def process():
     synopsis_wide_template.close()
     if not bool(variables_dict["article_subject"]):
         synopsis_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
-    for variable_name, variable in variables_dict.iteritems():
-        synopsis_wide_text = synopsis_wide_text.replace(variable_name, variable)
+    for variable_name in variables_dict_keys:
+        synopsis_wide_text = synopsis_wide_text.replace(variable_name, str(variables_dict[variable_name]))
     synopsis_wide = open(full_folder_path+"/Synopsis Wide.html","w")
     synopsis_wide.write(synopsis_wide_text)
     synopsis_wide.close()
     #Synopsis Wide
 
     #Moving Photos
-    feature_image_path_tuple = os.path.splitext(feature_image_path.get())
-    wide_image_path_tuple = os.path.splitext(wide_image_path.get())
-    crown_image_path_tuple = os.path.splitext(crown_image_path.get())
-    os.mkdir(folder_path+"/Photos/Features/"+variables_dict["structure_title"])
-    os.replace("".join(feature_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+feature_image_path_tuple[1])
-    os.replace("".join(wide_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+" Synopsis Wide"+wide_image_path_tuple[1])
-    os.replace("".join(crown_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+" Star"+crown_image_path_tuple[1])
+    #feature_image_path_tuple = os.path.splitext(feature_image_path.get())
+    #wide_image_path_tuple = os.path.splitext(wide_image_path.get())
+    #crown_image_path_tuple = os.path.splitext(crown_image_path.get())
+    #os.mkdir(folder_path+"/Photos/Features/"+variables_dict["structure_title"])
+    #os.replace("".join(feature_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+feature_image_path_tuple[1])
+    #os.replace("".join(wide_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+" Synopsis Wide"+wide_image_path_tuple[1])
+    #os.replace("".join(crown_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+" Star"+crown_image_path_tuple[1])
     #Moving Photos 
 
 def load_markdown():
     global variables_dict
     previous_markdown = open("Previous Markdown.txt","r")
     variables_dict = eval(previous_markdown.read().strip())
+    
+    title.set(variables_dict["title"])
+    structure_title.set(variables_dict["structure_title"])
+    article_subject.set(variables_dict["article_subject"])
+    article_type.set({"Review":0, "Analysis":1}[variables_dict["article_type"]])
+    article_type_specification.set(variables_dict["article_type_specification"])
+    feature_image_source.set(variables_dict["feature_image_source"])
+    wide_image_source.set(variables_dict["wide_image_source"])
+    article_type_specification.set(variables_dict["article_type_specification"])
+
+    synopsis_text.delete("1.0","end-1c")
+    synopsis_text.insert("end-1c", variables_dict["synopsis_text"])
+    wide_synopsis_text.delete("1.0","end-1c")
+    wide_synopsis_text.insert("end-1c", variables_dict["wide_synopsis_text"])
+
+    article_txt_path.set(variables_dict["article_txt_path"])
+    feature_image_path.set(variables_dict["feature_image_path"])
+    wide_image_path.set(variables_dict["wide_image_path"])
+    crown_image_path.set(variables_dict["crown_image_path"])
+
+    rating.set(variables_dict["rating"])
+
 def save_markdown():
     update_variables_dict()
     previous_markdown = open("Previous Markdown.txt","w")
@@ -140,8 +166,9 @@ Label(testing_frame, text="→", bg="white", fg="cyan").pack(side="left")
 Label(testing_frame, text="→", bg="white", fg="blue").pack(side="left")
 Label(testing_frame, text="→", bg="white", fg="purple").pack(side="left")
 testing = IntVar()
-Checkbutton(testing_frame, text="Testing?", variable=testing, onvalue=0, offvalue=1).pack(side="left") #Testing Defult
-#Checkbutton(testing_frame, text="Testing?", variable=testing, onvalue=1, offvalue=0).pack(side="left") #Not Testing Defult
+#testing.set(1) #Not Testing Defult
+testing.set(1) #Testing Defult
+Checkbutton(testing_frame, text="Testing?", variable=testing, onvalue=1, offvalue=0).pack(side="left")
 Label(testing_frame, text="←", bg="white", fg="purple").pack(side="left")
 Label(testing_frame, text="←", bg="white", fg="blue").pack(side="left")
 Label(testing_frame, text="←", bg="white", fg="cyan").pack(side="left")
@@ -153,11 +180,11 @@ Label(testing_frame, text="←", bg="white", fg="red").pack(side="left")
 title_frame = Frame(window)
 title_frame.pack(padx=(10, 10), pady=(0,2), anchor="w")
 Label(title_frame, text="Title : ", bg="white", justify="left").grid(row=0,column=0)
-title = Entry(title_frame, bg="white", width="35", highlightbackground="red")
-title.grid(row=0,column=1)
+title = StringVar()
+Entry(title_frame, textvariable=title, bg="white", width="35", highlightbackground="red").grid(row=0,column=1)
 Label(title_frame, text="Structure Title : ", bg="white", justify="left").grid(row=1,column=0)
-structure_title = Entry(title_frame, bg="white", width="35", highlightbackground="red")
-structure_title.grid(row=1,column=1)
+structure_title = StringVar()
+Entry(title_frame, textvariable=structure_title, bg="white", width="35", highlightbackground="red").grid(row=1,column=1)
 article_subject = IntVar()
 Radiobutton(title_frame, text="General", variable=article_subject, value=1).grid(row=0,column=2,padx=(3,0),sticky="w")
 Radiobutton(title_frame, text="Film(s) Specific", variable=article_subject, value=0).grid(row=1,column=2,padx=(3,0),sticky="w")
@@ -175,8 +202,8 @@ article_type = IntVar()
 Radiobutton(article_type_frame, text="Review", variable=article_type, value=0).pack(side="left")
 Radiobutton(article_type_frame, text="Analysis", variable=article_type, value=1).pack(side="left")
 Label(article_type_frame, text="Specification : ", bg="white").pack(side="left")
-article_type_specification = Entry(article_type_frame, bg="white", highlightbackground="yellow")
-article_type_specification.pack(side="left")
+article_type_specification = StringVar()
+Entry(article_type_frame, textvariable=article_type_specification, bg="white", highlightbackground="yellow").pack(side="left")
 
 image_frame = Frame(window)
 image_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
@@ -185,14 +212,14 @@ Label(image_frame, text="File Path /", bg="white").grid(row=0,column=1)
 Label(image_frame, text="Feature Image", bg="white").grid(row=1,column=0)
 feature_image_path = StringVar()
 Entry(image_frame, textvariable=feature_image_path, bg="white", width="25", highlightbackground="lawn green").grid(row=1,column=1)
-feature_image_source = Entry(image_frame, bg="white", width="10", highlightbackground="lawn green")
-feature_image_source.grid(row=1,column=2)
+feature_image_source = StringVar()
+Entry(image_frame, textvariable=feature_image_source, bg="white", width="10", highlightbackground="lawn green").grid(row=1,column=2)
 Button(image_frame, text ="Directory Select", command = select_feature_image).grid(row=1,column=3,padx=(3,0))
 Label(image_frame, text="Wide Image", bg="white").grid(row=2,column=0)
 wide_image_path = StringVar()
 Entry(image_frame, textvariable=wide_image_path, bg="white", width="25", highlightbackground="lawn green").grid(row=2,column=1)
-wide_image_source = Entry(image_frame, bg="white", width="10", highlightbackground="lawn green")
-wide_image_source.grid(row=2,column=2)
+wide_image_source = StringVar()
+Entry(image_frame, textvariable=wide_image_source, bg="white", width="10", highlightbackground="lawn green").grid(row=2,column=2)
 Button(image_frame, text ="Directory Select", command = select_wide_image).grid(row=2,column=3,padx=(3,0))
 
 synopsis_frame = Frame(window)
