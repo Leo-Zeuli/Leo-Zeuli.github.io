@@ -9,6 +9,33 @@ window=Tk()
 window.title("Article Markdown")
 window["bg"] = "white"
 
+variables_dict = {"title":"", "structure_title":"", "article_subject":"", "article_type":"",
+                  "article_type_specification":"", "feature_image_source":"", "wide_image_source":"",
+                  "synopsis_text":"", "wide_synopsis_text":"", "article_txt_path":"",
+                  "feature_image_path":"", "wide_image_path":"", "crown_image_path":"", "rating":""}
+
+def update_variables_dict():
+    global variables_dict
+    variables_dict["title"] = title.get()
+    variables_dict["structure_title"] = structure_title.get().strip()
+    variables_dict["article_subject"] = article_subject.get()
+    variables_dict["article_type"] = ["Review","Analysis"][article_type.get()]
+    variables_dict["article_type_specification"] = article_type_specification.get().strip()
+    variables_dict["feature_image_source"] = feature_image_source.get().strip()
+    variables_dict["wide_image_source"] = wide_image_source.get().strip()
+    variables_dict["synopsis_text"] = synopsis_text.get("1.0","end-1c").strip()
+    variables_dict["wide_synopsis_text"] = wide_synopsis_text.get("1.0","end-1c").strip()
+
+    variables_dict["article_txt_path"] = article_txt_path.get().strip()
+    variables_dict["feature_image_path"] = feature_image_path.get().strip()
+    variables_dict["wide_image_path"] = wide_image_path.get().strip()
+    variables_dict["crown_image_path"] = crown_image_path.get().strip()
+
+    variables_dict["rating"] = rating.get()
+    
+    if article_type_specification.get().strip() == "":
+        variables_dict["article_type_specification"] = variables_dict["article_type"]
+
 def select_article_txt():
     file_path = filedialog.askopenfilename(initialdir="/Desktop", title="Select Article.txt",
                                              filetypes=(("text files","*.txt"),))
@@ -34,34 +61,21 @@ def process_router():
     else:
         process()
 def process():
-    #Gather Variables
-    film_specific = not bool(article_subject.get())
-    star_rating = float(rating.get())
+    update_variables_dict()
 
-    #article_txt_path.get()
-
+    #Make Folder
     folder_path = os.path.abspath(os.getcwd())
-    full_folder_path = folder_path+"/Features/"+structure_title.get().strip()
+    full_folder_path = folder_path+"/Features/"+variables_dict["structure_title"]
     if not os.path.exists(full_folder_path):
         os.mkdir(full_folder_path)
-    variables_dict = {"title" : title.get(),
-                      "structure_title" : structure_title.get().strip(),
-                      "article_type" : ["Review","Analysis"][article_type.get()],
-                      "article_type_specification" : article_type_specification.get(),
-                      "feature_image_source" : feature_image_source.get(),
-                      "wide_image_source" : wide_image_source.get(),
-                      "synopsis_text" : synopsis_text.get("1.0","end-1c"),
-                      "wide_synopsis_text" : wide_synopsis_text.get("1.0","end-1c")}
-    if article_type_specification.get().strip() == "":
-        variables_dict["article_type_specification"] = variables_dict["article_type"]
-    if film_specific:
-        variables_dict["title"] = variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>")
-    #Gather Variables
+    #Make Folder
         
     #Synopsis Compact
     synopsis_compact_template = open(folder_path+"/Features/Template/Synopsis Compact Template.html","r")
     synopsis_compact_text = synopsis_compact_template.read()
     synopsis_compact_template.close()
+    if not bool(variables_dict["article_subject"]):
+        synopsis_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
     for variable_name, variable in variables_dict.iteritems():
         synopsis_compact_text = synopsis_compact_text.replace(variable_name, variable)
     synopsis_compact = open(full_folder_path+"/Synopsis Compact.html","w")
@@ -73,6 +87,8 @@ def process():
     synopsis_template = open(folder_path+"/Features/Template/Synopsis Template.html","r")
     synopsis_text = synopsis_template.read()
     synopsis_template.close()
+    if not bool(variables_dict["article_subject"]):
+        synopsis_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
     for variable_name, variable in variables_dict.iteritems():
         synopsis_text = synopsis_text.replace(variable_name, variable)
     synopsis = open(full_folder_path+"/Synopsis.html","w")
@@ -84,6 +100,8 @@ def process():
     synopsis_wide_template = open(folder_path+"/Features/Template/Synopsis Wide Template.html","r")
     synopsis_wide_text = synopsis_wide_template.read()
     synopsis_wide_template.close()
+    if not bool(variables_dict["article_subject"]):
+        synopsis_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
     for variable_name, variable in variables_dict.iteritems():
         synopsis_wide_text = synopsis_wide_text.replace(variable_name, variable)
     synopsis_wide = open(full_folder_path+"/Synopsis Wide.html","w")
@@ -102,12 +120,14 @@ def process():
     #Moving Photos 
 
 def load_markdown():
-    pass
+    global variables_dict
+    previous_markdown = open("Previous Markdown.txt","r")
+    variables_dict = eval(previous_markdown.read().strip())
 def save_markdown():
-    previous_markdown = open("Previous Markdown.txt","r+")
-    previous_markdown_dictionary = eval(previous_markdown.read().strip())
+    update_variables_dict()
+    previous_markdown = open("Previous Markdown.txt","w")
     previous_markdown.truncate(0)
-    previous_markdown.write(str(previous_markdown_dictionary))
+    previous_markdown.write(str(variables_dict))
     previous_markdown.close()
 
 testing_frame = Frame(window)
@@ -120,7 +140,8 @@ Label(testing_frame, text="→", bg="white", fg="cyan").pack(side="left")
 Label(testing_frame, text="→", bg="white", fg="blue").pack(side="left")
 Label(testing_frame, text="→", bg="white", fg="purple").pack(side="left")
 testing = IntVar()
-Checkbutton(testing_frame, text="Testing?", variable=testing, onvalue=1, offvalue=0).pack(side="left")
+Checkbutton(testing_frame, text="Testing?", variable=testing, onvalue=0, offvalue=1).pack(side="left") #Testing Defult
+#Checkbutton(testing_frame, text="Testing?", variable=testing, onvalue=1, offvalue=0).pack(side="left") #Not Testing Defult
 Label(testing_frame, text="←", bg="white", fg="purple").pack(side="left")
 Label(testing_frame, text="←", bg="white", fg="blue").pack(side="left")
 Label(testing_frame, text="←", bg="white", fg="cyan").pack(side="left")
