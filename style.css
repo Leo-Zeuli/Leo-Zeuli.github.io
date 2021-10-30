@@ -29,6 +29,7 @@
   column-gap: 30px;
   row-gap: 10px
   align: center;
+  flex-wrap: wrap;
 }
 
 a.name {
@@ -171,10 +172,11 @@ a.feature-link {
 /* Compact */
 /* Index Level */
 .compact-flexbox-container {
+  width: min(100%, 800px);
+  margin: auto;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  justify-content: center;
 }
 .compact-alignment {
   flex-grow: 1;
