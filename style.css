@@ -26,7 +26,8 @@
 .navigation-flexbox-container {
   display: flex;
   justify-content: center;
-  gap: 40px;
+  column-gap: 30px;
+  row-gap: 10px
   align: center;
 }
 
