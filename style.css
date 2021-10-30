@@ -135,7 +135,7 @@ img.feature-image {
 
 .feature-caption {
   color: grey;
-  width: min(800px, 100%)
+  width: min(100%,800px)
   text-align: left;
   margin-top: -0.75em;
   margin-bottom: 1em;
@@ -169,12 +169,10 @@ a.feature-link {
 /* Compact */
 /* Index Level */
 .compact-flexbox-container {
-  width: min(100%, 800px);
-  margin: auto;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  flex-wrap: wrap;
+  justify-content: center;
 }
 .compact-alignment {
   flex-grow: 1;
