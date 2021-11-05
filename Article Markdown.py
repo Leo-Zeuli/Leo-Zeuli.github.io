@@ -84,7 +84,7 @@ def process():
         os.replace("".join(feature_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+feature_image_path_tuple[1])
     except: pass
     try:
-        os.replace("".join(wide_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+" Synopsis Wide"+wide_image_path_tuple[1])
+        os.replace("".join(wide_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+" Wide"+wide_image_path_tuple[1])
     except: pass
     try:
         os.replace("".join(crown_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+" Star"+crown_image_path_tuple[1])
