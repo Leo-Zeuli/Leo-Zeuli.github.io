@@ -127,26 +127,23 @@ def process():
         if paragraph:
             formated_raw_article_text += ('<p class="general">'+paragraph+"</p>")
     article_text = article_text.replace('<p class="general"></p>',formated_raw_article_text)
-
-
-
-
-
-        
-    
     article = open(full_folder_path+"/"+variables_dict["structure_title"]+".html","w")
     article.write(article_text)
     article.close()
     #Article
 
     #Moving Photos
-    #feature_image_path_tuple = os.path.splitext(feature_image_path.get())
-    #wide_image_path_tuple = os.path.splitext(wide_image_path.get())
-    #crown_image_path_tuple = os.path.splitext(crown_image_path.get())
-    #os.mkdir(folder_path+"/Photos/Features/"+variables_dict["structure_title"])
-    #os.replace("".join(feature_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+feature_image_path_tuple[1])
-    #os.replace("".join(wide_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+" Synopsis Wide"+wide_image_path_tuple[1])
-    #os.replace("".join(crown_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+" Star"+crown_image_path_tuple[1])
+    feature_image_path_tuple = os.path.splitext(feature_image_path.get())
+    wide_image_path_tuple = os.path.splitext(wide_image_path.get())
+    crown_image_path_tuple = os.path.splitext(crown_image_path.get())
+    if not os.path.exists(folder_path+"/Photos/Features/"+variables_dict["structure_title"]):
+        os.mkdir(folder_path+"/Photos/Features/"+variables_dict["structure_title"])
+    if feature_image_path_tuple != ("",""):
+        os.replace("".join(feature_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+feature_image_path_tuple[1])
+    if wide_image_path_tuple != ("",""):
+        os.replace("".join(wide_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+" Synopsis Wide"+wide_image_path_tuple[1])
+    if crown_image_path_tuple != ("",""):
+        os.replace("".join(crown_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+" Star"+crown_image_path_tuple[1])
     #Moving Photos 
 
 def load_markdown():
