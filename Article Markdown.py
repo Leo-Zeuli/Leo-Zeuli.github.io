@@ -78,9 +78,9 @@ def process():
     synopsis_compact_template = open(folder_path+"/Features/Template/Synopsis Compact Template.html","r")
     synopsis_compact_text = synopsis_compact_template.read()
     synopsis_compact_template.close()
-    if not bool(variables_dict["article_subject"]):
-        synopsis_compact_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
     for variable_name in variables_dict_keys:
+        if (variable_name == "title") and (not bool(variables_dict["article_subject"])):
+            synopsis_compact_text = synopsis_compact_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
         synopsis_compact_text = synopsis_compact_text.replace(variable_name, str(variables_dict[variable_name]))
     synopsis_compact = open(full_folder_path+"/Synopsis Compact.html","w")
     synopsis_compact.write(synopsis_compact_text)
@@ -91,9 +91,9 @@ def process():
     synopsis_template = open(folder_path+"/Features/Template/Synopsis Template.html","r")
     synopsis_text = synopsis_template.read()
     synopsis_template.close()
-    if not bool(variables_dict["article_subject"]):
-        synopsis_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
     for variable_name in variables_dict_keys:
+        if (variable_name == "title") and (not bool(variables_dict["article_subject"])):
+            synopsis_text = synopsis_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
         synopsis_text = synopsis_text.replace(variable_name, str(variables_dict[variable_name]))
     synopsis = open(full_folder_path+"/Synopsis.html","w")
     synopsis.write(synopsis_text)
@@ -104,14 +104,40 @@ def process():
     synopsis_wide_template = open(folder_path+"/Features/Template/Synopsis Wide Template.html","r")
     synopsis_wide_text = synopsis_wide_template.read()
     synopsis_wide_template.close()
-    if not bool(variables_dict["article_subject"]):
-        synopsis_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
     for variable_name in variables_dict_keys:
+        if (variable_name == "title") and (not bool(variables_dict["article_subject"])):
+            synopsis_wide_text = synopsis_wide_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
         synopsis_wide_text = synopsis_wide_text.replace(variable_name, str(variables_dict[variable_name]))
     synopsis_wide = open(full_folder_path+"/Synopsis Wide.html","w")
     synopsis_wide.write(synopsis_wide_text)
     synopsis_wide.close()
     #Synopsis Wide
+
+    #Article
+    article_template = open(folder_path+"/Features/Template/Article Template.html","r")
+    article_text = article_template.read()
+    article_template.close()
+    for variable_name in variables_dict_keys:
+        if (variable_name == "title") and (not bool(variables_dict["article_subject"])):
+            article_text = article_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
+        article_text = article_text.replace(variable_name, str(variables_dict[variable_name]))
+    raw_article_text = open(article_txt_path.get(),"r")
+    formated_raw_article_text = ""
+    for paragraph in raw_article_text.read().splitlines():
+        if paragraph:
+            formated_raw_article_text += ('<p class="general">'+paragraph+"</p>")
+    article_text = article_text.replace('<p class="general"></p>',formated_raw_article_text)
+
+
+
+
+
+        
+    
+    article = open(full_folder_path+"/"+variables_dict["structure_title"]+".html","w")
+    article.write(article_text)
+    article.close()
+    #Article
 
     #Moving Photos
     #feature_image_path_tuple = os.path.splitext(feature_image_path.get())
