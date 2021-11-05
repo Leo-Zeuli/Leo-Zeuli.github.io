@@ -149,6 +149,9 @@ def process():
     article_template = open(folder_path+"/Features/Template/Article Template.html","r")
     article_text = article_template.read()
     article_template.close()
+    star_template = "<img src='/Photos/Features/structure_title/structure_title%20Starcrown_image_path_extension' alt='structure_title Themed Star' class='star'>"
+    half_star_template = "<div class='half' style='display: inline-block'><img src='/Photos/Features/structure_title/structure_title%20Starcrown_image_path_extension' alt='structure_title Themed Half-Star' class='star'></div>"
+    article_text = article_text.replace("<star></star>", int(float(variables_dict["rating"]))*star_template+int(2*(float(variables_dict["rating"])%1))*half_star_template)
     for variable_name in variables_dict_keys:
         if variable_name == "title":
             if not bool(variables_dict["article_subject"]):
