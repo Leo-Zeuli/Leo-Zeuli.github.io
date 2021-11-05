@@ -12,7 +12,7 @@ window["bg"] = "white"
 variables_dict = {"title":"", "structure_title":"", "article_subject":"", "article_type":"",
                   "article_type_specification":"", "feature_image_source":"", "wide_image_source":"",
                   "synopsis_text":"", "wide_synopsis_text":"", "article_txt_path":"",
-                  "feature_image_path":"", "wide_image_path":"", "crown_image_path":"", "rating":""}
+                  "feature_image_path":"", "wide_image_path":"", "star_image_path":"", "rating":""}
 
 def update_variables_dict():
     global variables_dict
@@ -29,7 +29,7 @@ def update_variables_dict():
     variables_dict["article_txt_path"] = article_txt_path.get().strip()
     variables_dict["feature_image_path"] = feature_image_path.get().strip()
     variables_dict["wide_image_path"] = wide_image_path.get().strip()
-    variables_dict["crown_image_path"] = crown_image_path.get().strip()
+    variables_dict["star_image_path"] = star_image_path.get().strip()
 
     variables_dict["rating"] = rating.get()
     
@@ -48,10 +48,10 @@ def select_wide_image():
     file_path = filedialog.askopenfilename(initialdir="/Desktop", title="Select Wide Image",  
                                              filetypes=(("jpeg files", "*.jpeg"), ("jpg files", "*.jpg"), ("png files", "*.png")))
     wide_image_path.set(file_path)
-def select_crown_image():
-    file_path = filedialog.askopenfilename(initialdir="/Desktop", title="Select Crown Image",
+def select_star_image():
+    file_path = filedialog.askopenfilename(initialdir="/Desktop", title="Select Star Image",
                                              filetypes=(("jpeg files", "*.jpeg"), ("jpg files", "*.jpg"), ("png files", "*.png")))
-    crown_image_path.set(file_path)
+    star_image_path.set(file_path)
 
 def process_router():
     istesting = bool(testing.get())
@@ -76,8 +76,8 @@ def process():
     variables_dict["feature_image_path_extension"] = feature_image_path_tuple[1]
     wide_image_path_tuple = os.path.splitext(wide_image_path.get())
     variables_dict["wide_image_path_extension"] = wide_image_path_tuple[1]
-    crown_image_path_tuple = os.path.splitext(crown_image_path.get())
-    variables_dict["crown_image_path_extension"] = crown_image_path_tuple[1]
+    star_image_path_tuple = os.path.splitext(star_image_path.get())
+    variables_dict["star_image_path_extension"] = star_image_path_tuple[1]
     if not os.path.exists(folder_path+"/Photos/Features/"+variables_dict["structure_title"]):
         os.mkdir(folder_path+"/Photos/Features/"+variables_dict["structure_title"])
     try:
@@ -87,7 +87,7 @@ def process():
         os.replace("".join(wide_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+" Wide"+wide_image_path_tuple[1])
     except: pass
     try:
-        os.replace("".join(crown_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+" Star"+crown_image_path_tuple[1])
+        os.replace("".join(star_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+" Star"+star_image_path_tuple[1])
     except: pass
     #Moving Photos
 
@@ -149,8 +149,8 @@ def process():
     article_template = open(folder_path+"/Features/Template/Article Template.html","r")
     article_text = article_template.read()
     article_template.close()
-    star_template = "<img src='/Photos/Features/structure_title/structure_title%20Starcrown_image_path_extension' alt='structure_title Themed Star' class='star'>"
-    half_star_template = "<div class='half' style='display: inline-block'><img src='/Photos/Features/structure_title/structure_title%20Starcrown_image_path_extension' alt='structure_title Themed Half-Star' class='star'></div>"
+    star_template = "<img src='/Photos/Features/structure_title/structure_title%20Starstar_image_path_extension' alt='structure_title Themed Star' class='star'>"
+    half_star_template = "<div class='half' style='display: inline-block'><img src='/Photos/Features/structure_title/structure_title%20Starstar_image_path_extension' alt='structure_title Themed Half-Star' class='star'></div>"
     article_text = article_text.replace("<star></star>", int(float(variables_dict["rating"]))*star_template+int(2*(float(variables_dict["rating"])%1))*half_star_template)
     for variable_name in variables_dict_keys:
         if variable_name == "title":
@@ -193,7 +193,7 @@ def load_markdown():
     article_txt_path.set(variables_dict["article_txt_path"])
     feature_image_path.set(variables_dict["feature_image_path"])
     wide_image_path.set(variables_dict["wide_image_path"])
-    crown_image_path.set(variables_dict["crown_image_path"])
+    star_image_path.set(variables_dict["star_image_path"])
 
     rating.set(variables_dict["rating"])
 
@@ -282,16 +282,16 @@ Label(wide_synopsis_frame, text="Wide Synopsis", bg="white").grid(row=0,column=0
 wide_synopsis_text = Text(wide_synopsis_frame, bg="white", highlightbackground="blue", highlightcolor="blue", height="10")
 wide_synopsis_text.grid(row=1,column=0)
 
-crown_frame = Frame(window)
-crown_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
-Label(crown_frame, text="Crown Image Path /", bg="white").pack(side="left")
-crown_image_path = StringVar()
-Entry(crown_frame, textvariable=crown_image_path, bg="white", width="35", highlightbackground="purple").pack(side="left")
+star_frame = Frame(window)
+star_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
+Label(star_frame, text="Star Image Path /", bg="white").pack(side="left")
+star_image_path = StringVar()
+Entry(star_frame, textvariable=star_image_path, bg="white", width="35", highlightbackground="purple").pack(side="left")
 ratings = ["0.0","0.5","1.0","1.5","2.0","2.5","3.0","3.5","4.0","4.5","5.0"]
 rating = StringVar()
 rating.set(ratings[0])
-OptionMenu(crown_frame, rating, *ratings).pack(side="left")
-Button(crown_frame, text ="Directory Select", command = select_crown_image).pack(side="left")
+OptionMenu(star_frame, rating, *ratings).pack(side="left")
+Button(star_frame, text ="Directory Select", command = select_star_image).pack(side="left")
 
 markdown_processes_frame = Frame(window)
 markdown_processes_frame.pack(padx=(10, 10), pady=(2,2), anchor="center")
