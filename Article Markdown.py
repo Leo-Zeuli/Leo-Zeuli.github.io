@@ -71,6 +71,26 @@ def process():
         os.mkdir(full_folder_path)
     #Make Folder
 
+    #Moving Photos
+    feature_image_path_tuple = os.path.splitext(feature_image_path.get())
+    variables_dict["feature_image_path_extension"] = feature_image_path_tuple[1]
+    wide_image_path_tuple = os.path.splitext(wide_image_path.get())
+    variables_dict["wide_image_path_extension"] = wide_image_path_tuple[1]
+    crown_image_path_tuple = os.path.splitext(crown_image_path.get())
+    variables_dict["crown_image_path_extension"] = crown_image_path_tuple[1]
+    if not os.path.exists(folder_path+"/Photos/Features/"+variables_dict["structure_title"]):
+        os.mkdir(folder_path+"/Photos/Features/"+variables_dict["structure_title"])
+    try:
+        os.replace("".join(feature_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+feature_image_path_tuple[1])
+    except: pass
+    try:
+        os.replace("".join(wide_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+" Synopsis Wide"+wide_image_path_tuple[1])
+    except: pass
+    try:
+        os.replace("".join(crown_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+" Star"+crown_image_path_tuple[1])
+    except: pass
+    #Moving Photos
+
     variables_dict_keys = list(variables_dict.keys())
     variables_dict_keys.sort(reverse = True, key = (lambda dict_key: len(dict_key)))
     
@@ -79,9 +99,13 @@ def process():
     synopsis_compact_text = synopsis_compact_template.read()
     synopsis_compact_template.close()
     for variable_name in variables_dict_keys:
-        if (variable_name == "title") and (not bool(variables_dict["article_subject"])):
-            synopsis_compact_text = synopsis_compact_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
-        synopsis_compact_text = synopsis_compact_text.replace(variable_name, str(variables_dict[variable_name]))
+        if variable_name == "title":
+            if not bool(variables_dict["article_subject"]):
+                synopsis_compact_text = synopsis_compact_text.replace("_title_",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
+            else:
+                synopsis_compact_text = synopsis_compact_text.replace("_title_", str(variables_dict[variable_name]))
+        else:
+            synopsis_compact_text = synopsis_compact_text.replace(variable_name, str(variables_dict[variable_name]))
     synopsis_compact = open(full_folder_path+"/Synopsis Compact.html","w")
     synopsis_compact.write(synopsis_compact_text)
     synopsis_compact.close()
@@ -92,9 +116,13 @@ def process():
     synopsis_text = synopsis_template.read()
     synopsis_template.close()
     for variable_name in variables_dict_keys:
-        if (variable_name == "title") and (not bool(variables_dict["article_subject"])):
-            synopsis_text = synopsis_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
-        synopsis_text = synopsis_text.replace(variable_name, str(variables_dict[variable_name]))
+        if variable_name == "title":
+            if not bool(variables_dict["article_subject"]):
+                synopsis_text = synopsis_text.replace("_title_",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
+            else:
+                synopsis_text = synopsis_text.replace("_title_", str(variables_dict[variable_name]))
+        else:
+            synopsis_text = synopsis_text.replace(variable_name, str(variables_dict[variable_name]))
     synopsis = open(full_folder_path+"/Synopsis.html","w")
     synopsis.write(synopsis_text)
     synopsis.close()
@@ -105,9 +133,13 @@ def process():
     synopsis_wide_text = synopsis_wide_template.read()
     synopsis_wide_template.close()
     for variable_name in variables_dict_keys:
-        if (variable_name == "title") and (not bool(variables_dict["article_subject"])):
-            synopsis_wide_text = synopsis_wide_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
-        synopsis_wide_text = synopsis_wide_text.replace(variable_name, str(variables_dict[variable_name]))
+        if variable_name == "title":
+            if not bool(variables_dict["article_subject"]):
+                synopsis_wide_text = synopsis_wide_text.replace("_title_",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
+            else:
+                synopsis_wide_text = synopsis_wide_text.replace("_title_", str(variables_dict[variable_name]))
+        else:
+            synopsis_wide_text = synopsis_wide_text.replace(variable_name, str(variables_dict[variable_name]))
     synopsis_wide = open(full_folder_path+"/Synopsis Wide.html","w")
     synopsis_wide.write(synopsis_wide_text)
     synopsis_wide.close()
@@ -118,9 +150,13 @@ def process():
     article_text = article_template.read()
     article_template.close()
     for variable_name in variables_dict_keys:
-        if (variable_name == "title") and (not bool(variables_dict["article_subject"])):
-            article_text = article_text.replace("title",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
-        article_text = article_text.replace(variable_name, str(variables_dict[variable_name]))
+        if variable_name == "title":
+            if not bool(variables_dict["article_subject"]):
+                article_text = article_text.replace("_title_",variables_dict["title"].replace(variables_dict["structure_title"],"<i>"+variables_dict["structure_title"]+"</i>"))
+            else:
+                article_text = article_text.replace("_title_", str(variables_dict[variable_name]))
+        else:
+            article_text = article_text.replace(variable_name, str(variables_dict[variable_name]))
     raw_article_text = open(article_txt_path.get(),"r")
     formated_raw_article_text = ""
     for paragraph in raw_article_text.read().splitlines():
@@ -131,20 +167,6 @@ def process():
     article.write(article_text)
     article.close()
     #Article
-
-    #Moving Photos
-    feature_image_path_tuple = os.path.splitext(feature_image_path.get())
-    wide_image_path_tuple = os.path.splitext(wide_image_path.get())
-    crown_image_path_tuple = os.path.splitext(crown_image_path.get())
-    if not os.path.exists(folder_path+"/Photos/Features/"+variables_dict["structure_title"]):
-        os.mkdir(folder_path+"/Photos/Features/"+variables_dict["structure_title"])
-    if feature_image_path_tuple != ("",""):
-        os.replace("".join(feature_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+feature_image_path_tuple[1])
-    if wide_image_path_tuple != ("",""):
-        os.replace("".join(wide_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+" Synopsis Wide"+wide_image_path_tuple[1])
-    if crown_image_path_tuple != ("",""):
-        os.replace("".join(crown_image_path_tuple), folder_path+"/Photos/Features/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+" Star"+crown_image_path_tuple[1])
-    #Moving Photos 
 
 def load_markdown():
     global variables_dict
