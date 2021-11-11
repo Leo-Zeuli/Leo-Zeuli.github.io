@@ -56,9 +56,14 @@ def select_star_image():
 def process_router():
     istesting = bool(testing.get())
     if istesting:
-        variables_dict_keys = list(variables_dict.keys())
-        variables_dict_keys.sort(reverse = True, key = (lambda dict_key: len(dict_key)))
-        print(variables_dict_keys)
+        folder_path = os.path.abspath(os.getcwd())
+        feature_loader = open(folder_path+"/Features/Features-Loader.js")
+        lines = feature_loader.readlines()
+        lines[0] = lines[0][:16] + "["+structure_title.get().strip()+","+{"Review":"r","Analysis":"a"}[["Review","Analysis"][article_type.get()]]+"]," + lines[0][16:]
+        feature_loader.close()
+        feature_loader = open(folder_path+"/Features/Features-Loader.js","w")
+        feature_loader.writelines(lines)
+        feature_loader.close()
     else:
         process()
 def process():
@@ -170,6 +175,16 @@ def process():
     article.write(article_text)
     article.close()
     #Article
+
+    #Feature Loader
+    feature_loader = open(folder_path+"/Features/Features-Loader.js")
+    lines = feature_loader.readlines()
+    lines[0] = lines[0][:16] + '["'+variables_dict["structure_title"]+'","'+{"Review":"r","Analysis":"a"}[variables_dict["article_type"]]+'"],' + lines[0][16:]
+    feature_loader.close()
+    feature_loader = open(folder_path+"/Features/Features-Loader.js","w")
+    feature_loader.writelines(lines)
+    feature_loader.close()
+    #Feature Loader
 
 def load_markdown():
     global variables_dict
