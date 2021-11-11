@@ -1,4 +1,4 @@
-var features = [["Texas Chainsaw Massacre","a"],[dfg,r],aa["Blade Runner 2049","a"],["Loki","r"]];
+var features = [["Texas Chainsaw Massacre","a"],["Blade Runner 2049","a"],["Loki","r"]];
 var features_loaded = new Array(features.length).fill(false);
 
 var synopsis_pointer = 0;
