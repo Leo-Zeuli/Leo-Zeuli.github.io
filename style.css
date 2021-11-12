@@ -207,9 +207,10 @@ img.compact-synopsis-image {
 .flexbox-container {
   width: min(100%, 800px);
   margin: auto;
+  Margin-bottom: 10px;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  column-gap: 10px;
 }
 .image-container {
   flex-grow: 1;
@@ -222,6 +223,7 @@ img.compact-synopsis-image {
 }
 .synopsis {
   margin-top: 10px;
+  Margin-bottom: 0px;
 }
 img.synopsis-photo {
   border-radius: 5px;
