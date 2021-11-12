@@ -1,4 +1,4 @@
-var features = [["Texas Chainsaw Massacre","a"],["Blade Runner 2049","a"],["Loki","r"]];
+var features = [["Bored to Death S1","r"],["Texas Chainsaw Massacre","a"],["Blade Runner 2049","a"],["Loki","r"]];
 var features_loaded = new Array(features.length).fill(false);
 
 var synopsis_pointer = 0;
