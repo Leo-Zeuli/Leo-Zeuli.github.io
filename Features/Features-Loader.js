@@ -33,7 +33,7 @@ function load_synopsis_wide(r_or_a=null) {
     div.setAttribute("style", "margin: 25px 0 25px 0");
     div.setAttribute("id", "wide");
     document.getElementById("wide-synopses").appendChild(div);
-    $("#wide").load("Features/"+features[synopsis_pointer][0]+"/Synopsis%20Wide.html");
+    $("#wide").load("Features/"+features[synopsis_pointer][0].replaceAll(" ","%20")+"/Synopsis%20Wide.html");
     synopsis_pointer += 1;
   }
 }
