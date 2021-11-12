@@ -171,7 +171,7 @@ def process():
         if paragraph:
             formated_raw_article_text += ('<p class="general">'+paragraph+"</p>")
     article_text = article_text.replace('<p class="general"></p>',formated_raw_article_text)
-    article = open(full_folder_path+"/"+variables_dict["structure_title"]+".html","w")
+    article = open(full_folder_path+".html","w")
     article.write(article_text)
     article.close()
     #Article
