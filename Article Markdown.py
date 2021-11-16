@@ -56,14 +56,7 @@ def select_star_image():
 def process_router():
     istesting = bool(testing.get())
     if istesting:
-        folder_path = os.path.abspath(os.getcwd())
-        feature_loader = open(folder_path+"/Features/Features-Loader.js")
-        lines = feature_loader.readlines()
-        lines[0] = lines[0][:16] + "["+structure_title.get().strip()+","+{"Review":"r","Analysis":"a"}[["Review","Analysis"][article_type.get()]]+"]," + lines[0][16:]
-        feature_loader.close()
-        feature_loader = open(folder_path+"/Features/Features-Loader.js","w")
-        feature_loader.writelines(lines)
-        feature_loader.close()
+        print("testing mode")
     else:
         process()
 def process():
