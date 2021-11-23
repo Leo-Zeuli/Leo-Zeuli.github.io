@@ -149,7 +149,9 @@ def process():
     article_template.close()
     star_template = "<img src='/Photos/Features/structure_title/structure_title%20Starstar_image_path_extension' alt='structure_title Themed Star' class='star'>"
     half_star_template = "<div class='half' style='display: inline-block'><img src='/Photos/Features/structure_title/structure_title%20Starstar_image_path_extension' alt='structure_title Themed Half-Star' class='star'></div>"
-    article_text = article_text.replace("<star></star>", int(float(variables_dict["rating"]))*star_template+int(2*(float(variables_dict["rating"])%1))*half_star_template)
+    out_of_five = "<img src='/Photos/Features/Out of Five.png' alt='/5' style='width: 45px; height: 35px;'>"
+    if star_image_path:
+        article_text = article_text.replace("<star></star>", int(float(variables_dict["rating"]))*star_template+int(2*(float(variables_dict["rating"])%1))*half_star_template+out_of_five)
     for variable_name in variables_dict_keys:
         if variable_name == "title":
             if not bool(variables_dict["article_subject"]):
