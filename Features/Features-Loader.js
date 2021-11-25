@@ -70,4 +70,7 @@ function load_more(source) {
   } else if (source == "features") {
     load_synopses(6);
   }
+  if (synopsis_pointer >= features.length) {
+    $(".load-more").attr("hidden",true);
+  }
 };
