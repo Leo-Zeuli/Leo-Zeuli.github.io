@@ -181,6 +181,12 @@ def process():
     feature_loader.close()
     #Feature Loader
 
+    #Sitemap
+    sitemap = open("sitemap.txt","a")
+    sitemap.write("\nhttps://leo-zeuli.github.io/Features/"+variables_dict["structure_title"]+".html")
+    sitemap.close()
+    #Sitemap
+
 def load_markdown():
     global variables_dict
     previous_markdown = open("Previous Markdown.txt","r")
