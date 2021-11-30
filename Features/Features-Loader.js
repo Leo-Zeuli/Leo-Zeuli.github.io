@@ -30,7 +30,7 @@ function load_synopses(number_of_synopses,r_or_a=null) {
 function load_synopsis_wide(r_or_a=null) {
   if (!document.getElementById("wide-synopses").hasChildNodes()) {
     var div = document.createElement('div');
-    div.setAttribute("style", "margin: 25px 0 25px 0");
+    div.setAttribute("style", "margin: 25px 0 15px 0");
     div.setAttribute("id", "wide");
     document.getElementById("wide-synopses").appendChild(div);
     $("#wide").load("Features/"+features[synopsis_pointer][0].replaceAll(" ","%20")+"/Synopsis%20Wide.html");
