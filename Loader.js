@@ -3,11 +3,11 @@ var features_loaded = new Array(features.length).fill(false);
 
 var synopsis_pointer = 0;
 
-function load_synopses(number_of_synopses,r_or_a=null) {
+function load_synopses(number_of_synopses, type=[]) {
   var end_index = synopsis_pointer+number_of_synopses;
   synopsis_pointer += number_of_synopses;
   for (let i = end_index-number_of_synopses; i < Math.min(end_index,features.length); i++) {
-    if ((r_or_a == null) || (features[i][1] == r_or_a)) {
+    if (type.includes(features[I][1])) {
       $.get("Features/"+features[i][0]+"/Synopsis.html", function(data) {
         var div = document.createElement("div");
         div.setAttribute("id", i);
@@ -20,14 +20,14 @@ function load_synopses(number_of_synopses,r_or_a=null) {
         }
         features_loaded[i] = true;
       }).fail(function() {
-        load_synopses(1, r_or_a);
+        load_synopses(1, type);
       });
     } else {
       end_index += 1;
     }
   }
 }
-function load_synopsis_wide(r_or_a=null) {
+function load_synopsis_wide(type=[]) {
   if (!document.getElementById("wide-synopses").hasChildNodes()) {
     var div = document.createElement('div');
     div.setAttribute("style", "margin: 25px 0 15px 0");
@@ -37,7 +37,7 @@ function load_synopsis_wide(r_or_a=null) {
     synopsis_pointer += 1;
   }
 }
-function load_synopses_compact(number_of_synopses,r_or_a=null) {
+function load_synopses_compact(number_of_synopses, type=[]) {
   var end_index = synopsis_pointer+number_of_synopses;
   synopsis_pointer += number_of_synopses;
   for (let i = end_index-number_of_synopses; i < Math.min(end_index,features.length); i++) {
@@ -64,11 +64,19 @@ function load_more(source) {
     load_synopsis_wide();
     load_synopses_compact(9);
   } else if (source == "reviews") {
-    load_synopses(6,"r");
+    load_synopses(6,["r"]);
   } else if (source == "analyses") {
-    load_synopses(6,"a");
+    load_synopses(6,["a"]);
   } else if (source == "features") {
-    load_synopses(6);
+    load_synopses(6,["r","a"]);
+  } else if (source == "screenplays") {
+    load_synopses(6,["s"]);
+  } else if (source == "prose") {
+    load_synopses(6,["p"]);
+  } else if (source == "narratives") {
+    load_synopses(6,["s","p"]);
+  } else if (source == "art") {
+    load_synopses(6,["ar"]);
   }
   if (synopsis_pointer >= features.length) {
     $(".load-more").attr("hidden",true);
