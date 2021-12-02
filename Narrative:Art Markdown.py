@@ -27,7 +27,7 @@ def update_variables_dict():
     variables_dict["synopsis_text"] = synopsis_text.get("1.0","end-1c").strip()
     variables_dict["wide_synopsis_text"] = wide_synopsis_text.get("1.0","end-1c").strip()
     
-    if article_type_specification.get().strip() == "":
+    if story_type_specification.get().strip() == "":
         variables_dict["story_type_specification"] = variables_dict["story_type"]
 
 def select_synopsis_image():
@@ -153,7 +153,7 @@ def process():
 
 def load_markdown():
     global variables_dict
-    previous_markdown = open("Previous Narrative/Art Markdown.txt","r")
+    previous_markdown = open("Previous Narrative\Art Markdown.txt","r")
     variables_dict = eval(previous_markdown.read().strip())
     
     title.set(variables_dict["title"])
@@ -171,7 +171,7 @@ def load_markdown():
 
 def save_markdown():
     update_variables_dict()
-    previous_markdown = open("Previous Narrative/Art Markdown.txt","w")
+    previous_markdown = open("Previous Narrative\Art Markdown.txt","w")
     previous_markdown.truncate(0)
     previous_markdown.write(str(variables_dict))
     previous_markdown.close()
