@@ -18,7 +18,7 @@ def update_variables_dict():
     variables_dict["title"] = title.get()
     variables_dict["structure_title"] = structure_title.get().strip()
     variables_dict["story_type"] = ["Screenplay","Prose","Art"][story_type.get()]
-    variables_dict["parent_folder"] = {"Screenplay":"Narratives","Prose":"Narratives","Art":"Art"}[variables_dict["story_type"]]
+    variables_dict["parent_folder"] = {"Screenplay":"Narratives","Prose":"Narratives","Art":"Art","Collection":"Art"}[variables_dict["story_type"]]
     variables_dict["story_type_specification"] = story_type_specification.get().strip()
     
     variables_dict["synopsis_image_source"] = synopsis_image_source.get().strip()
@@ -55,7 +55,7 @@ def process():
     synopsis_image_path_tuple = os.path.splitext(synopsis_image_path.get())
     variables_dict["synopsis_image_path_extension"] = synopsis_image_path_tuple[1]
     if not os.path.exists(folder_path+"/Photos/"+variables_dict["parent_folder"]+"/"+variables_dict["structure_title"]):
-        os.mkdir(folder_path+"/Photos/Features/"+variables_dict["structure_title"])
+        os.mkdir(folder_path+"/Photos/"+variables_dict["parent_folder"]+"/"+variables_dict["structure_title"])
     try:
         os.replace("".join(synopsis_image_path_tuple), folder_path+"/Photos/"+variables_dict["parent_folder"]+"/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+synopsis_image_path_tuple[1])
     except: pass
@@ -118,7 +118,7 @@ def process():
     #Story Loader
     feature_loader = open(folder_path+"/Loader.js")
     lines = feature_loader.readlines()
-    lines[0] = lines[0][:16] + '["'+variables_dict["structure_title"]+'","'+{"Screenplay":"s","Prose":"p","Art":"ar"}[variables_dict["article_type"]]+'"],' + lines[0][16:]
+    lines[0] = lines[0][:16] + '["'+variables_dict["structure_title"]+'","'+{"Screenplay":"s","Prose":"p","Art":"ar","Collection":"c"}[variables_dict["article_type"]]+'"],' + lines[0][16:]
     feature_loader.close()
     feature_loader = open(folder_path+"/Loader.js","w")
     feature_loader.writelines(lines)
@@ -158,7 +158,7 @@ def load_markdown():
     
     title.set(variables_dict["title"])
     structure_title.set(variables_dict["structure_title"])
-    story_type.set({"Screenplay":0,"Prose":1,"Art":2}[variables_dict["story_type"]])
+    story_type.set({"Screenplay":0,"Prose":1,"Art":2,"Collection":3}[variables_dict["story_type"]])
     story_type_specification.set(variables_dict["story_type_specification"])
     
     synopsis_image_source.set(variables_dict["synopsis_image_source"])
@@ -212,9 +212,10 @@ story_type = IntVar()
 Radiobutton(story_type_frame, text="Screenplay", variable=story_type, value=0).pack(side="left")
 Radiobutton(story_type_frame, text="Prose", variable=story_type, value=1).pack(side="left")
 Radiobutton(story_type_frame, text="Art", variable=story_type, value=2).pack(side="left")
+Radiobutton(story_type_frame, text="Collection", variable=story_type, value=3).pack(side="left")
 Label(story_type_frame, text="Specification : ", bg="white").pack(side="left")
 story_type_specification = StringVar()
-Entry(story_type_frame, textvariable=story_type_specification, bg="white", highlightbackground="yellow").pack(side="left")
+Entry(story_type_frame, textvariable=story_type_specification, bg="white", highlightbackground="yellow", width="18").pack(side="left")
 
 image_frame = Frame(window)
 image_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
