@@ -2,13 +2,14 @@ var features = [["Revolution Storyboard","s"],["Books and Movies","a"],["Black W
 var features_loaded = new Array(features.length).fill(false);
 
 var synopsis_pointer = 0;
+const parent_folder_dictionary = {"a":"Features","r":"Features","s":"Narratives","p":"Narratives","ar":"Art","c":"Art"}
 
 function load_synopses(number_of_synopses, type=[]) {
   var end_index = synopsis_pointer+number_of_synopses;
   synopsis_pointer += number_of_synopses;
   for (let i = end_index-number_of_synopses; i < Math.min(end_index,features.length); i++) {
-    if (type.includes(features[I][1])) {
-      $.get("Features/"+features[i][0]+"/Synopsis.html", function(data) {
+    if (type.includes(features[i][1])) {
+      $.get(parent_folder_dictionary[features[i][1]]+"/"+features[i][0]+"/Synopsis.html", function(data) {
         var div = document.createElement("div");
         div.setAttribute("id", i);
         div.innerHTML = data;
@@ -33,7 +34,7 @@ function load_synopsis_wide(type=[]) {
     div.setAttribute("style", "margin: 25px 0 15px 0");
     div.setAttribute("id", "wide");
     document.getElementById("wide-synopses").appendChild(div);
-    $("#wide").load("Features/"+features[synopsis_pointer][0].replaceAll(" ","%20")+"/Synopsis%20Wide.html");
+    $("#wide").load(parent_folder_dictionary[features[synopsis_pointer][1]]+"/"+features[synopsis_pointer][0].replaceAll(" ","%20")+"/Synopsis%20Wide.html");
     synopsis_pointer += 1;
   }
 }
@@ -41,7 +42,7 @@ function load_synopses_compact(number_of_synopses, type=[]) {
   var end_index = synopsis_pointer+number_of_synopses;
   synopsis_pointer += number_of_synopses;
   for (let i = end_index-number_of_synopses; i < Math.min(end_index,features.length); i++) {
-    $.get("Features/"+features[i][0]+"/Synopsis%20Compact.html", function(data) {
+    $.get(parent_folder_dictionary[features[i][1]]+"/"+features[i][0]+"/Synopsis%20Compact.html", function(data) {
       var div = document.createElement("div");
       div.setAttribute("class", "compact-alignment");
       div.setAttribute("id", i);
