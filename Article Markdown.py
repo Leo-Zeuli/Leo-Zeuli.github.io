@@ -1,4 +1,4 @@
-#Delete "Previous Markdown.txt" to clear the data upon opening the program
+#Delete "Previous Article Markdown.txt" to clear the data upon opening the program
 
 from tkinter import *
 from tkinter import ttk
@@ -172,11 +172,11 @@ def process():
     #Article
 
     #Feature Loader
-    feature_loader = open(folder_path+"/Features/Features-Loader.js")
+    feature_loader = open(folder_path+"/Loader.js")
     lines = feature_loader.readlines()
     lines[0] = lines[0][:16] + '["'+variables_dict["structure_title"]+'","'+{"Review":"r","Analysis":"a"}[variables_dict["article_type"]]+'"],' + lines[0][16:]
     feature_loader.close()
-    feature_loader = open(folder_path+"/Features/Features-Loader.js","w")
+    feature_loader = open(folder_path+"/Loader.js","w")
     feature_loader.writelines(lines)
     feature_loader.close()
     #Feature Loader
@@ -189,7 +189,7 @@ def process():
 
 def load_markdown():
     global variables_dict
-    previous_markdown = open("Previous Markdown.txt","r")
+    previous_markdown = open("Previous Article Markdown.txt","r")
     variables_dict = eval(previous_markdown.read().strip())
     
     title.set(variables_dict["title"])
@@ -215,7 +215,7 @@ def load_markdown():
 
 def save_markdown():
     update_variables_dict()
-    previous_markdown = open("Previous Markdown.txt","w")
+    previous_markdown = open("Previous Article Markdown.txt","w")
     previous_markdown.truncate(0)
     previous_markdown.write(str(variables_dict))
     previous_markdown.close()
@@ -230,7 +230,7 @@ Label(testing_frame, text="→", bg="white", fg="cyan").pack(side="left")
 Label(testing_frame, text="→", bg="white", fg="blue").pack(side="left")
 Label(testing_frame, text="→", bg="white", fg="purple").pack(side="left")
 testing = IntVar()
-#testing.set(1) #Not Testing Defult
+#testing.set(0) #Not Testing Defult
 testing.set(1) #Testing Defult
 Checkbutton(testing_frame, text="Testing?", variable=testing, onvalue=1, offvalue=0).pack(side="left")
 Label(testing_frame, text="←", bg="white", fg="purple").pack(side="left")
