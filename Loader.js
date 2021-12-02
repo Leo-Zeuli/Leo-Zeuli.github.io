@@ -8,7 +8,7 @@ function load_synopses(number_of_synopses, type=[]) {
   var end_index = synopsis_pointer+number_of_synopses;
   synopsis_pointer += number_of_synopses;
   for (let i = end_index-number_of_synopses; i < Math.min(end_index,features.length); i++) {
-    if (type.includes(features[i][1])) {
+    if (type.includes(features[i][1]) || (type.length == 0)) {
       $.get(parent_folder_dictionary[features[i][1]]+"/"+features[i][0]+"/Synopsis.html", function(data) {
         var div = document.createElement("div");
         div.setAttribute("id", i);
