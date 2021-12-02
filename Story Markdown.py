@@ -1,4 +1,4 @@
-#Delete "Previous Narrative/Art Markdown.txt" to clear the data upon opening the program
+#Delete "Previous Story Markdown.txt" to clear the data upon opening the program
 
 from tkinter import *
 from tkinter import ttk
@@ -6,7 +6,7 @@ from tkinter import filedialog
 import os
 
 window=Tk()
-window.title("Narrative/Art Markdown")
+window.title("Story Markdown")
 window["bg"] = "white"
 
 variables_dict = {"title":"", "structure_title":"", "story_type":"", "parent_folder":"",
@@ -115,7 +115,7 @@ def process():
     synopsis_wide.close()
     #Synopsis Wide
 
-    #Narrative/Art Loader
+    #Story Loader
     feature_loader = open(folder_path+"/Loader.js")
     lines = feature_loader.readlines()
     lines[0] = lines[0][:16] + '["'+variables_dict["structure_title"]+'","'+{"Screenplay":"s","Prose":"p","Art":"ar"}[variables_dict["article_type"]]+'"],' + lines[0][16:]
@@ -123,7 +123,7 @@ def process():
     feature_loader = open(folder_path+"/Loader.js","w")
     feature_loader.writelines(lines)
     feature_loader.close()
-    #Narrative/Art Loader
+    #Story Loader
 
     #Sitemap
     sitemap = open("sitemap.txt","a")
@@ -153,7 +153,7 @@ def process():
 
 def load_markdown():
     global variables_dict
-    previous_markdown = open("Previous Narrative\Art Markdown.txt","r")
+    previous_markdown = open("Previous Story Markdown.txt","r")
     variables_dict = eval(previous_markdown.read().strip())
     
     title.set(variables_dict["title"])
@@ -171,7 +171,7 @@ def load_markdown():
 
 def save_markdown():
     update_variables_dict()
-    previous_markdown = open("Previous Narrative\Art Markdown.txt","w")
+    previous_markdown = open("Previous Story Markdown.txt","w")
     previous_markdown.truncate(0)
     previous_markdown.write(str(variables_dict))
     previous_markdown.close()
