@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width">
     <link href="style.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="favicon.png">
-    <title>Features</title>
-    <script src="/Features/Features-Loader.js"></script>
+    <title>Screenplays</title>
+    <script src="/Loader.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript">
       $(function() {
@@ -17,5 +17,10 @@
   <body>
     <div id="navigation"></div>
     <div class="general">Just figuring out the backend</div>
+    <div id="synopses"></div>
+    <center>
+      <button class="load-more" onclick="load_more('screenplays')" style="margin: 0 0 0 0; padding: 0 0 0 0;">Load More</button>
+    </center>
+    <script>load_more("screenplays")</script>
   </body>
 </html>
