@@ -118,7 +118,7 @@ def process():
     #Story Loader
     feature_loader = open(folder_path+"/Loader.js")
     lines = feature_loader.readlines()
-    lines[0] = lines[0][:16] + '["'+variables_dict["structure_title"]+'","'+{"Screenplay":"s","Prose":"p","Art":"ar","Collection":"c"}[variables_dict["article_type"]]+'"],' + lines[0][16:]
+    lines[0] = lines[0][:16] + '["'+variables_dict["structure_title"]+'","'+{"Screenplay":"s","Prose":"p","Art":"ar","Collection":"c"}[variables_dict["story_type"]]+'"],' + lines[0][16:]
     feature_loader.close()
     feature_loader = open(folder_path+"/Loader.js","w")
     feature_loader.writelines(lines)
