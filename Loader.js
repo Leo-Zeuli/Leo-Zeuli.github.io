@@ -92,8 +92,8 @@ function load_synopses_compact(number_of_synopses, type=[]) {
 
 function load_more(source) {
   if (source == "index") {
-    load_synopsis_wide();
-    load_synopses_compact(9);
+    load_synopsis_wide(["r","a","s","p","c"]);
+    load_synopses_compact(9,["r","a","s","p","c"]);
   } else if (source == "reviews") {
     load_synopses(6,["r"]);
   } else if (source == "analyses") {
