@@ -1,4 +1,4 @@
-var features = [["Revolution Storyboard","s"],["Books and Movies","a"],["Black Widow","a"],["Bored to Death","r"],["Bored to Death S1","r"],["Texas Chainsaw Massacre","a"],["Blade Runner 2049","a"],["Loki","r"]];
+var features = [["Sensation","ar"],["Revolution Storyboard","s"],["Books and Movies","a"],["Black Widow","a"],["Bored to Death","r"],["Bored to Death S1","r"],["Texas Chainsaw Massacre","a"],["Blade Runner 2049","a"],["Loki","r"]];
 var features_loaded = new Array(features.length).fill(false);
 
 var synopsis_pointer = 0;
