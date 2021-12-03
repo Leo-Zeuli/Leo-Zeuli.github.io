@@ -109,27 +109,15 @@ def process():
     #Synopsis Wide
 
     #Art
-
-
-
-
-
-
-        
     if variables_dict["story_type"] == "Art":
         art_template = open(folder_path+"/Art/Template/Art Template.html","r")
         art_html = art_template.read()
         art_template.close()
         for variable_name in variables_dict_keys:
-            synopsis_compact_text = synopsis_compact_text.replace(variable_name, str(variables_dict[variable_name]))
-        formated_raw_article_text = ""
-        for paragraph in raw_article_text.read().splitlines():
-            if paragraph:
-                formated_raw_article_text += ('<p class="general">'+paragraph+"</p>")
-        article_text = article_text.replace('<p class="general"></p>',formated_raw_article_text)
-        article = open(full_folder_path+".html","w")
-        article.write(article_text)
-        article.close()
+            art_html = art_html.replace(variable_name, str(variables_dict[variable_name]))
+        art = open(full_folder_path+".html","w")
+        art.write(art_html)
+        art.close()
     #Art
 
     #Art Loader
