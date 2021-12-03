@@ -50,7 +50,7 @@ def process():
         os.mkdir(full_folder_path)
     #Make Folder
 
-    #Moving Photos
+    #Moving Photo
     synopsis_image_path_tuple = os.path.splitext(synopsis_image_path.get())
     variables_dict["synopsis_image_path_extension"] = synopsis_image_path_tuple[1]
     if not os.path.exists(folder_path+"/Photos/Narratives/"+variables_dict["structure_title"]):
@@ -58,7 +58,7 @@ def process():
     try:
         os.replace("".join(synopsis_image_path_tuple), folder_path+"/Photos/Narratives/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+synopsis_image_path_tuple[1])
     except: pass
-    #Moving Photos
+    #Moving Photo
 
     variables_dict_keys = list(variables_dict.keys())
     variables_dict_keys.sort(reverse = True, key = (lambda dict_key: len(dict_key)))
