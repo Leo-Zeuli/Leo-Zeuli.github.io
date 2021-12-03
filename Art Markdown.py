@@ -53,47 +53,43 @@ def process():
     #Moving Photos
     synopsis_image_path_tuple = os.path.splitext(synopsis_image_path.get())
     variables_dict["synopsis_image_path_extension"] = synopsis_image_path_tuple[1]
-    if not os.path.exists(folder_path+"/Photos/Art/"+variables_dict["structure_title"]):
-        os.mkdir(folder_path+"/Photos/Art/"+variables_dict["structure_title"])
-    try:
-        os.replace("".join(synopsis_image_path_tuple), folder_path+"/Photos/Art/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+synopsis_image_path_tuple[1])
-    except: pass
+    if variables_dict["story_type"] == "Collection":
+        if not os.path.exists(folder_path+"/Photos/Art/"+variables_dict["structure_title"]):
+            os.mkdir(folder_path+"/Photos/Art/"+variables_dict["structure_title"])
+        try:
+            os.replace("".join(synopsis_image_path_tuple), folder_path+"/Photos/Art/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+synopsis_image_path_tuple[1])
+        except: pass
+    if variables_dict["story_type"] == "Art":
+        try:
+            os.replace("".join(synopsis_image_path_tuple), folder_path+"/Photos/Art/"+variables_dict["structure_title"]+synopsis_image_path_tuple[1])
+        except: pass
+        
     #Moving Photos
 
     variables_dict_keys = list(variables_dict.keys())
     variables_dict_keys.sort(reverse = True, key = (lambda dict_key: len(dict_key)))
     
     #Synopsis Compact
-    if variables_dict["story_type"] == "Art":
-        synopsis_compact_template = open(folder_path+"/Narratives/Template/Synopsis Compact Template.html","r")
-        synopsis_compact_text = synopsis_compact_template.read()
-        synopsis_compact_template.close()
-        for variable_name in variables_dict_keys:
-            if variable_name == "synopsis_image_source":
-                if variables_dict["synopsis_image_source"]:
-                    synopsis_compact_text = synopsis_compact_text.replace("synopsis_image_source", "Image: "+variables_dict["synopsis_image_source"])
-                else:
-                    synopsis_compact_text = synopsis_compact_text.replace("synopsis_image_source", "")
-            else:
-                synopsis_compact_text = synopsis_compact_text.replace(variable_name, str(variables_dict[variable_name]))
-        synopsis_compact = open(full_folder_path+"/Synopsis Compact.html","w")
-        synopsis_compact.write(synopsis_compact_text)
-        synopsis_compact.close()
+    synopsis_compact_template = open(folder_path+"/Art/Template/Synopsis Compact Template.html","r")
+    synopsis_compact_text = synopsis_compact_template.read()
+    synopsis_compact_template.close()
+    for variable_name in variables_dict_keys:
+        if ((variables_dict["story_type"] == "Collection") and (variable_name == "synopsis_image_path_extension")):
+            synopsis_compact_text = synopsis_compact_text.replace(variable_name, "/structure_title"+str(variables_dict[variable_name]))
+        else:
+            synopsis_compact_text = synopsis_compact_text.replace(variable_name, str(variables_dict[variable_name]))
+    synopsis_compact = open(full_folder_path+"/Synopsis Compact.html","w")
+    synopsis_compact.write(synopsis_compact_text)
+    synopsis_compact.close()
     #Synopsis Compact
 
     #Synopsis
     if variables_dict["story_type"] == "Collection":
-        synopsis_template = open(folder_path+"/Narratives/Template/Synopsis Template.html","r")
+        synopsis_template = open(folder_path+"/Art/Template/Synopsis Template.html","r")
         synopsis_text = synopsis_template.read()
         synopsis_template.close()
         for variable_name in variables_dict_keys:
-            if variable_name == "synopsis_image_source":
-                if variables_dict["synopsis_image_source"]:
-                    synopsis_text = synopsis_text.replace("synopsis_image_source", "Image: "+variables_dict["synopsis_image_source"])
-                else:
-                    synopsis_text = synopsis_text.replace("synopsis_image_source", "")
-            else:
-                synopsis_text = synopsis_text.replace(variable_name, str(variables_dict[variable_name]))
+            synopsis_text = synopsis_text.replace(variable_name, str(variables_dict[variable_name]))
         synopsis = open(full_folder_path+"/Synopsis.html","w")
         synopsis.write(synopsis_text)
         synopsis.close()
@@ -101,17 +97,11 @@ def process():
 
     #Synopsis Wide
     if variables_dict["story_type"] == "Collection":
-        synopsis_wide_template = open(folder_path+"/Narratives/Template/Synopsis Wide Template.html","r")
+        synopsis_wide_template = open(folder_path+"/Art/Template/Synopsis Wide Template.html","r")
         synopsis_wide_text = synopsis_wide_template.read()
         synopsis_wide_template.close()
         for variable_name in variables_dict_keys:
-            if variable_name == "synopsis_image_source":
-                if variables_dict["synopsis_image_source"]:
-                    synopsis_wide_text = synopsis_wide_text.replace("synopsis_image_source", "Image: "+variables_dict["synopsis_image_source"])
-                else:
-                    synopsis_wide_text = synopsis_wide_text.replace("synopsis_image_source", "")
-            else:
-                synopsis_wide_text = synopsis_wide_text.replace(variable_name, str(variables_dict[variable_name]))
+            synopsis_wide_text = synopsis_wide_text.replace(variable_name, str(variables_dict[variable_name]))
         synopsis_wide = open(full_folder_path+"/Synopsis Wide.html","w")
         synopsis_wide.write(synopsis_wide_text)
         synopsis_wide.close()
@@ -155,7 +145,7 @@ def process():
 
 def load_markdown():
     global variables_dict
-    previous_markdown = open("Previous Story Markdown.txt","r")
+    previous_markdown = open("Previous Art Markdown.txt","r")
     variables_dict = eval(previous_markdown.read().strip())
     
     title.set(variables_dict["title"])
@@ -173,7 +163,7 @@ def load_markdown():
 
 def save_markdown():
     update_variables_dict()
-    previous_markdown = open("Previous Story Markdown.txt","w")
+    previous_markdown = open("Previous Art Markdown.txt","w")
     previous_markdown.truncate(0)
     previous_markdown.write(str(variables_dict))
     previous_markdown.close()
