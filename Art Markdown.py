@@ -9,9 +9,9 @@ window=Tk()
 window.title("Art Markdown")
 window["bg"] = "white"
 
-variables_dict = {"title":"", "structure_title":"", "story_type":"",
-                  "story_type_specification":"", "synopsis_image_source":"",
-                  "synopsis_image_path":"", "synopsis_text":"", "wide_synopsis_text":""}
+variables_dict = {"title":"", "structure_title":"", "story_type":"", "blurb_text":"",
+                  "story_type_specification":"","synopsis_image_path":"",
+                  "synopsis_text":"", "wide_synopsis_text":""}
 
 def update_variables_dict():
     global variables_dict
@@ -22,6 +22,7 @@ def update_variables_dict():
     
     variables_dict["synopsis_image_path"] = synopsis_image_path.get().strip()
 
+    variables_dict["blurb_text"] = blurb_text.get("1.0","end-1c").strip()
     variables_dict["synopsis_text"] = synopsis_text.get("1.0","end-1c").strip()
     variables_dict["wide_synopsis_text"] = wide_synopsis_text.get("1.0","end-1c").strip()
     
@@ -107,7 +108,31 @@ def process():
         synopsis_wide.close()
     #Synopsis Wide
 
-    #Story Loader
+    #Art
+
+
+
+
+
+
+        
+    if variables_dict["story_type"] == "Art":
+        art_template = open(folder_path+"/Art/Template/Art Template.html","r")
+        art_html = art_template.read()
+        art_template.close()
+        for variable_name in variables_dict_keys:
+            synopsis_compact_text = synopsis_compact_text.replace(variable_name, str(variables_dict[variable_name]))
+        formated_raw_article_text = ""
+        for paragraph in raw_article_text.read().splitlines():
+            if paragraph:
+                formated_raw_article_text += ('<p class="general">'+paragraph+"</p>")
+        article_text = article_text.replace('<p class="general"></p>',formated_raw_article_text)
+        article = open(full_folder_path+".html","w")
+        article.write(article_text)
+        article.close()
+    #Art
+
+    #Art Loader
     feature_loader = open(folder_path+"/Loader.js")
     lines = feature_loader.readlines()
     lines[0] = lines[0][:16] + '["'+variables_dict["structure_title"]+'","'+{"Art":"ar","Collection":"c"}[variables_dict["story_type"]]+'"],' + lines[0][16:]
@@ -115,7 +140,7 @@ def process():
     feature_loader = open(folder_path+"/Loader.js","w")
     feature_loader.writelines(lines)
     feature_loader.close()
-    #Story Loader
+    #Art Loader
 
     #Sitemap
     sitemap = open("sitemap.txt","a")
@@ -153,9 +178,10 @@ def load_markdown():
     story_type.set({"Art":0,"Collection":1}[variables_dict["story_type"]])
     story_type_specification.set(variables_dict["story_type_specification"])
     
-    synopsis_image_source.set(variables_dict["synopsis_image_source"])
     synopsis_image_path.set(variables_dict["synopsis_image_path"])
 
+    blurb_text.delete("1.0","end-1c")
+    blurb_text.insert("end-1c", variables_dict["blurb_text"])
     synopsis_text.delete("1.0","end-1c")
     synopsis_text.insert("end-1c", variables_dict["synopsis_text"])
     wide_synopsis_text.delete("1.0","end-1c")
@@ -210,21 +236,27 @@ Entry(story_type_frame, textvariable=story_type_specification, bg="white", highl
 image_frame = Frame(window)
 image_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
 Label(image_frame, text="File Path /", bg="white").grid(row=0,column=1)
-Label(image_frame, text="Synopsis Image", bg="white").grid(row=1,column=0)
+Label(image_frame, text="Piece/Synopsis Image", bg="white").grid(row=1,column=0)
 synopsis_image_path = StringVar()
-Entry(image_frame, textvariable=synopsis_image_path, bg="white", width="40", highlightbackground="lawn green").grid(row=1,column=1)
+Entry(image_frame, textvariable=synopsis_image_path, bg="white", width="35", highlightbackground="lawn green").grid(row=1,column=1)
 Button(image_frame, text ="Directory Select", command = select_synopsis_image).grid(row=1,column=3,padx=(3,0))
+
+blurb_frame = Frame(window)
+blurb_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
+Label(blurb_frame, text="Art Blurb (Art Only)", bg="white").grid(row=0,column=0)
+blurb_text = Text(blurb_frame, bg="white", highlightbackground="cyan", highlightcolor="cyan", height="10")
+blurb_text.grid(row=1,column=0)
 
 synopsis_frame = Frame(window)
 synopsis_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
 Label(synopsis_frame, text="Synopsis (Collection Only)", bg="white").grid(row=0,column=0)
-synopsis_text = Text(synopsis_frame, bg="white", highlightbackground="cyan", highlightcolor="cyan", height="10")
+synopsis_text = Text(synopsis_frame, bg="white", highlightbackground="blue", highlightcolor="cyan", height="10")
 synopsis_text.grid(row=1,column=0)
 
 wide_synopsis_frame = Frame(window)
 wide_synopsis_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
 Label(wide_synopsis_frame, text="Wide Synopsis (Collection Only)", bg="white").grid(row=0,column=0)
-wide_synopsis_text = Text(wide_synopsis_frame, bg="white", highlightbackground="blue", highlightcolor="blue", height="10")
+wide_synopsis_text = Text(wide_synopsis_frame, bg="white", highlightbackground="purple", highlightcolor="blue", height="10")
 wide_synopsis_text.grid(row=1,column=0)
 
 markdown_processes_frame = Frame(window)
