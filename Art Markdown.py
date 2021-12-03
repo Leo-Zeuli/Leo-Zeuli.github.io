@@ -136,26 +136,6 @@ def process():
     sitemap.close()
     #Sitemap
 
-    #Remainder
-    remainder_frame = Frame(window)
-    remainder_frame.pack(padx=(10, 10), pady=(2,2), anchor="center")
-    Label(remainder_frame, text="→", bg="white", fg="red").pack(side="left")
-    Label(remainder_frame, text="→", bg="white", fg="orange").pack(side="left")
-    Label(remainder_frame, text="→", bg="white", fg="yellow").pack(side="left")
-    Label(remainder_frame, text="→", bg="white", fg="lawn green").pack(side="left")
-    Label(remainder_frame, text="→", bg="white", fg="cyan").pack(side="left")
-    Label(remainder_frame, text="→", bg="white", fg="blue").pack(side="left")
-    Label(remainder_frame, text="→", bg="white", fg="purple").pack(side="left")
-    Label(remainder_frame, text ='Move "'+variables_dict["structure_title"]+'.html" to /Art/').pack(side="left")
-    Label(remainder_frame, text="←", bg="white", fg="purple").pack(side="left")
-    Label(remainder_frame, text="←", bg="white", fg="blue").pack(side="left")
-    Label(remainder_frame, text="←", bg="white", fg="cyan").pack(side="left")
-    Label(remainder_frame, text="←", bg="white", fg="lawn green").pack(side="left")
-    Label(remainder_frame, text="←", bg="white", fg="yellow").pack(side="left")
-    Label(remainder_frame, text="←", bg="white", fg="orange").pack(side="left")
-    Label(remainder_frame, text="←", bg="white", fg="red").pack(side="left")
-    #Remainder
-
 def load_markdown():
     global variables_dict
     previous_markdown = open("Previous Art Markdown.txt","r")
