@@ -1,4 +1,4 @@
-#Delete "Previous Story Markdown.txt" to clear the data upon opening the program
+#Delete "Previous Narrative Markdown.txt" to clear the data upon opening the program
 
 from tkinter import *
 from tkinter import ttk
@@ -9,7 +9,7 @@ window=Tk()
 window.title("Story Markdown")
 window["bg"] = "white"
 
-variables_dict = {"title":"", "structure_title":"", "story_type":"", "parent_folder":"",
+variables_dict = {"title":"", "structure_title":"", "story_type":"",
                   "story_type_specification":"", "synopsis_image_source":"",
                   "synopsis_image_path":"", "synopsis_text":"", "wide_synopsis_text":""}
 
@@ -17,8 +17,7 @@ def update_variables_dict():
     global variables_dict
     variables_dict["title"] = title.get()
     variables_dict["structure_title"] = structure_title.get().strip()
-    variables_dict["story_type"] = ["Screenplay","Prose","Art"][story_type.get()]
-    variables_dict["parent_folder"] = {"Screenplay":"Narratives","Prose":"Narratives","Art":"Art","Collection":"Art"}[variables_dict["story_type"]]
+    variables_dict["story_type"] = ["Screenplay","Prose"][story_type.get()]
     variables_dict["story_type_specification"] = story_type_specification.get().strip()
     
     variables_dict["synopsis_image_source"] = synopsis_image_source.get().strip()
@@ -46,7 +45,7 @@ def process():
 
     #Make Folder
     folder_path = os.path.abspath(os.getcwd())
-    full_folder_path = folder_path+"/"+variables_dict["parent_folder"]+"/"+variables_dict["structure_title"]
+    full_folder_path = folder_path+"/Narratives/"+variables_dict["structure_title"]
     if not os.path.exists(full_folder_path):
         os.mkdir(full_folder_path)
     #Make Folder
@@ -54,10 +53,10 @@ def process():
     #Moving Photos
     synopsis_image_path_tuple = os.path.splitext(synopsis_image_path.get())
     variables_dict["synopsis_image_path_extension"] = synopsis_image_path_tuple[1]
-    if not os.path.exists(folder_path+"/Photos/"+variables_dict["parent_folder"]+"/"+variables_dict["structure_title"]):
-        os.mkdir(folder_path+"/Photos/"+variables_dict["parent_folder"]+"/"+variables_dict["structure_title"])
+    if not os.path.exists(folder_path+"/Photos/Narratives/"+variables_dict["structure_title"]):
+        os.mkdir(folder_path+"/Photos/Narratives/"+variables_dict["structure_title"])
     try:
-        os.replace("".join(synopsis_image_path_tuple), folder_path+"/Photos/"+variables_dict["parent_folder"]+"/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+synopsis_image_path_tuple[1])
+        os.replace("".join(synopsis_image_path_tuple), folder_path+"/Photos/Narratives/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+synopsis_image_path_tuple[1])
     except: pass
     #Moving Photos
 
@@ -118,7 +117,7 @@ def process():
     #Story Loader
     feature_loader = open(folder_path+"/Loader.js")
     lines = feature_loader.readlines()
-    lines[0] = lines[0][:16] + '["'+variables_dict["structure_title"]+'","'+{"Screenplay":"s","Prose":"p","Art":"ar","Collection":"c"}[variables_dict["story_type"]]+'"],' + lines[0][16:]
+    lines[0] = lines[0][:16] + '["'+variables_dict["structure_title"]+'","'+{"Screenplay":"s","Prose":"p"}[variables_dict["story_type"]]+'"],' + lines[0][16:]
     feature_loader.close()
     feature_loader = open(folder_path+"/Loader.js","w")
     feature_loader.writelines(lines)
@@ -127,7 +126,7 @@ def process():
 
     #Sitemap
     sitemap = open("sitemap.txt","a")
-    sitemap.write("\nhttps://leo-zeuli.github.io/"+variables_dict["parent_folder"]+"/"+variables_dict["structure_title"]+".html")
+    sitemap.write("\nhttps://leo-zeuli.github.io/Narratives/"+variables_dict["structure_title"]+".html")
     sitemap.close()
     #Sitemap
 
@@ -141,7 +140,7 @@ def process():
     Label(remainder_frame, text="→", bg="white", fg="cyan").pack(side="left")
     Label(remainder_frame, text="→", bg="white", fg="blue").pack(side="left")
     Label(remainder_frame, text="→", bg="white", fg="purple").pack(side="left")
-    Label(remainder_frame, text ='Move "'+variables_dict["structure_title"]+'.html" to /'+variables_dict["parent_folder"]+'/').pack(side="left")
+    Label(remainder_frame, text ='Move "'+variables_dict["structure_title"]+'.html" to /Narratives/').pack(side="left")
     Label(remainder_frame, text="←", bg="white", fg="purple").pack(side="left")
     Label(remainder_frame, text="←", bg="white", fg="blue").pack(side="left")
     Label(remainder_frame, text="←", bg="white", fg="cyan").pack(side="left")
@@ -153,12 +152,12 @@ def process():
 
 def load_markdown():
     global variables_dict
-    previous_markdown = open("Previous Story Markdown.txt","r")
+    previous_markdown = open("Previous Narrative Markdown.txt","r")
     variables_dict = eval(previous_markdown.read().strip())
     
     title.set(variables_dict["title"])
     structure_title.set(variables_dict["structure_title"])
-    story_type.set({"Screenplay":0,"Prose":1,"Art":2,"Collection":3}[variables_dict["story_type"]])
+    story_type.set({"Screenplay":0,"Prose":1}[variables_dict["story_type"]])
     story_type_specification.set(variables_dict["story_type_specification"])
     
     synopsis_image_source.set(variables_dict["synopsis_image_source"])
@@ -171,7 +170,7 @@ def load_markdown():
 
 def save_markdown():
     update_variables_dict()
-    previous_markdown = open("Previous Story Markdown.txt","w")
+    previous_markdown = open("Previous Narrative Markdown.txt","w")
     previous_markdown.truncate(0)
     previous_markdown.write(str(variables_dict))
     previous_markdown.close()
@@ -211,8 +210,6 @@ story_type_frame.pack(padx=(10, 10), pady=(2,2), anchor="center")
 story_type = IntVar()
 Radiobutton(story_type_frame, text="Screenplay", variable=story_type, value=0).pack(side="left")
 Radiobutton(story_type_frame, text="Prose", variable=story_type, value=1).pack(side="left")
-Radiobutton(story_type_frame, text="Art", variable=story_type, value=2).pack(side="left")
-Radiobutton(story_type_frame, text="Collection", variable=story_type, value=3).pack(side="left")
 Label(story_type_frame, text="Specification : ", bg="white").pack(side="left")
 story_type_specification = StringVar()
 Entry(story_type_frame, textvariable=story_type_specification, bg="white", highlightbackground="yellow", width="18").pack(side="left")
