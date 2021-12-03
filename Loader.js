@@ -43,6 +43,7 @@ function load_synopses(number_of_synopses, type=[]) {
       });
     } else {
       end_index += 1;
+      synopsis_pointer += 1;
     }
   }
   push_pointer(type);
