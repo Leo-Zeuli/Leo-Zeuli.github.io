@@ -107,6 +107,6 @@ function load_more(source) {
   } else if (source == "narratives") {
     load_synopses(6,["s","p"]);
   } else if (source == "art") {
-    load_synopses(6,["ar"]);
+    load_synopses_compact(6,["ar"]);
   }
 };
