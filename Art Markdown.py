@@ -114,7 +114,10 @@ def process():
         art_html = art_template.read()
         art_template.close()
         for variable_name in variables_dict_keys:
-            art_html = art_html.replace(variable_name, str(variables_dict[variable_name]))
+            if variable_name == "title"::
+                art_html = art_html.replace("_title_", str(variables_dict[variable_name]))
+            else:
+                art_html = art_html.replace(variable_name, str(variables_dict[variable_name]))
         art = open(full_folder_path+".html","w")
         art.write(art_html)
         art.close()
