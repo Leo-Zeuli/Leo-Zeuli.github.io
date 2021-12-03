@@ -50,6 +50,9 @@ function load_synopses(number_of_synopses, type=[]) {
 }
 function load_synopsis_wide(type=[]) {
   if (!document.getElementById("wide-synopses").hasChildNodes()) {
+    while (!(type.includes(features[synopsis_pointer][1])) && !(type.length == 0)) {
+      synopsis_pointer += 1;
+    }
     var div = document.createElement('div');
     div.setAttribute("style", "margin: 25px 0 15px 0");
     div.setAttribute("id", "wide");
@@ -63,21 +66,26 @@ function load_synopses_compact(number_of_synopses, type=[]) {
   var end_index = synopsis_pointer+number_of_synopses;
   synopsis_pointer += number_of_synopses;
   for (let i = end_index-number_of_synopses; i < Math.min(end_index,features.length); i++) {
-    $.get(parent_folder_dictionary[features[i][1]]+"/"+features[i][0]+"/Synopsis%20Compact.html", function(data) {
-      var div = document.createElement("div");
-      div.setAttribute("class", "compact-alignment");
-      div.setAttribute("id", i);
-      div.innerHTML = data;
-      let place_before = features_loaded.indexOf(true,i+1);
-      if (place_before == -1) {
-        document.getElementById("compact-synopses").appendChild(div);
-      } else {
-        $("#"+place_before).before(div);
-      }
-      features_loaded[i] = true;
-    }).fail(function() {
-      load_synopses_compact(1);
-    });
+    if (type.includes(features[i][1]) || (type.length == 0)) {
+      $.get(parent_folder_dictionary[features[i][1]]+"/"+features[i][0]+"/Synopsis%20Compact.html", function(data) {
+        var div = document.createElement("div");
+        div.setAttribute("class", "compact-alignment");
+        div.setAttribute("id", i);
+        div.innerHTML = data;
+        let place_before = features_loaded.indexOf(true,i+1);
+        if (place_before == -1) {
+          document.getElementById("compact-synopses").appendChild(div);
+        } else {
+          $("#"+place_before).before(div);
+        }
+        features_loaded[i] = true;
+      }).fail(function() {
+        load_synopses_compact(1);
+      });
+    } else {
+      end_index += 1;
+      synopsis_pointer += 1;
+    }
   }
   push_pointer(type);
 }
