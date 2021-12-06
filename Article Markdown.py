@@ -4,6 +4,9 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 import os
+import datetime
+time_raw = datetime.datetime.now()
+time = time_raw.strftime("%B")+" "+str(int(time_raw.strftime("%d")))+", "+time_raw.strftime("%Y")
 
 window=Tk()
 window.title("Article Markdown")
@@ -147,6 +150,7 @@ def process():
     article_template = open(folder_path+"/Features/Template/Article Template.html","r")
     article_text = article_template.read()
     article_template.close()
+    article_text = article_text.replace("time",time)
     star_template = "<img src='/Photos/Features/structure_title/structure_title%20Starstar_image_path_extension' alt='structure_title Themed Star' class='star'>"
     half_star_template = "<div class='half' style='display: inline-block'><img src='/Photos/Features/structure_title/structure_title%20Starstar_image_path_extension' alt='structure_title Themed Half-Star' class='star'></div>"
     out_of_five = "<img src='/Photos/Features/Out of Five.png' alt='/5' style='width: 45px; height: 35px;'>"

@@ -4,6 +4,9 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 import os
+import datetime
+time_raw = datetime.datetime.now()
+time = time_raw.strftime("%B")+" "+str(int(time_raw.strftime("%d")))+", "+time_raw.strftime("%Y")
 
 window=Tk()
 window.title("Art Markdown")
@@ -113,6 +116,7 @@ def process():
         art_template = open(folder_path+"/Art/Template/Art Template.html","r")
         art_html = art_template.read()
         art_template.close()
+        art_html = art_html.replace("time",time)
         for variable_name in variables_dict_keys:
             if variable_name == "title"::
                 art_html = art_html.replace("_title_", str(variables_dict[variable_name]))
