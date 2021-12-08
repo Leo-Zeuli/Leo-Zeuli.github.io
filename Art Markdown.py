@@ -118,7 +118,13 @@ def process():
         art_template.close()
         art_html = art_html.replace("time",time)
         for variable_name in variables_dict_keys:
-            if variable_name == "title"::
+            if variable_name == "blurb_text":
+                formated_blurb_text = ""
+                for paragraph in variables_dict[variable_name].splitlines():
+                    if paragraph:
+                        formated_blurb_text += ('<p class="general">'+paragraph+"</p>")
+                art_html = art_html.replace('<p class="general"></p>',formated_blurb_text)
+            elif variable_name == "title":
                 art_html = art_html.replace("_title_", str(variables_dict[variable_name]))
             else:
                 art_html = art_html.replace(variable_name, str(variables_dict[variable_name]))
