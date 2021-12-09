@@ -80,6 +80,8 @@ def process():
     for variable_name in variables_dict_keys:
         if ((variables_dict["story_type"] == "Collection") and (variable_name == "synopsis_image_path_extension")):
             synopsis_compact_text = synopsis_compact_text.replace(variable_name, "/structure_title"+str(variables_dict[variable_name]))
+        elif variable_name == "title":
+            synopsis_compact_text = synopsis_compact_text.replace("_title_", str(variables_dict[variable_name]))
         else:
             synopsis_compact_text = synopsis_compact_text.replace(variable_name, str(variables_dict[variable_name]))
     synopsis_compact = open(full_folder_path+"/Synopsis Compact.html","w")
@@ -93,7 +95,10 @@ def process():
         synopsis_text = synopsis_template.read()
         synopsis_template.close()
         for variable_name in variables_dict_keys:
-            synopsis_text = synopsis_text.replace(variable_name, str(variables_dict[variable_name]))
+            if variable_name == "title":
+                synopsis_text = synopsis_text.replace("_title_", str(variables_dict[variable_name]))
+            else:
+                synopsis_text = synopsis_text.replace(variable_name, str(variables_dict[variable_name]))
         synopsis = open(full_folder_path+"/Synopsis.html","w")
         synopsis.write(synopsis_text)
         synopsis.close()
@@ -105,7 +110,10 @@ def process():
         synopsis_wide_text = synopsis_wide_template.read()
         synopsis_wide_template.close()
         for variable_name in variables_dict_keys:
-            synopsis_wide_text = synopsis_wide_text.replace(variable_name, str(variables_dict[variable_name]))
+            if variable_name == "title":
+                synopsis_wide_text = synopsis_wide_text.replace("_title_", str(variables_dict[variable_name]))
+            else:
+                synopsis_wide_text = synopsis_wide_text.replace(variable_name, str(variables_dict[variable_name]))
         synopsis_wide = open(full_folder_path+"/Synopsis Wide.html","w")
         synopsis_wide.write(synopsis_wide_text)
         synopsis_wide.close()
