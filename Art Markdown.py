@@ -72,21 +72,35 @@ def process():
 
     variables_dict_keys = list(variables_dict.keys())
     variables_dict_keys.sort(reverse = True, key = (lambda dict_key: len(dict_key)))
+
+    #Linked Piece
+    if variables_dict["story_type"] == "Art":
+        linked_piece_template = open(folder_path+"/Art/Template/Linked Piece Template.html","r")
+        linked_piece_text = linked_piece_template.read()
+        linked_piece_template.close()
+        for variable_name in variables_dict_keys:
+            if variable_name == "title":
+                linked_piece_text = linked_piece_text.replace("_title_", str(variables_dict[variable_name]))
+            else:
+                linked_piece_text = linked_piece_text.replace(variable_name, str(variables_dict[variable_name]))
+        linked_piece = open(full_folder_path+"/Linked Piece.html","w")
+        linked_piece.write(linked_piece_text)
+        linked_piece.close()
+    #Linked Piece
     
     #Synopsis Compact
-    synopsis_compact_template = open(folder_path+"/Art/Template/Synopsis Compact Template.html","r")
-    synopsis_compact_text = synopsis_compact_template.read()
-    synopsis_compact_template.close()
-    for variable_name in variables_dict_keys:
-        if ((variables_dict["story_type"] == "Collection") and (variable_name == "synopsis_image_path_extension")):
-            synopsis_compact_text = synopsis_compact_text.replace(variable_name, "/structure_title"+str(variables_dict[variable_name]))
-        elif variable_name == "title":
-            synopsis_compact_text = synopsis_compact_text.replace("_title_", str(variables_dict[variable_name]))
-        else:
-            synopsis_compact_text = synopsis_compact_text.replace(variable_name, str(variables_dict[variable_name]))
-    synopsis_compact = open(full_folder_path+"/Synopsis Compact.html","w")
-    synopsis_compact.write(synopsis_compact_text)
-    synopsis_compact.close()
+    if variables_dict["story_type"] == "Collection":
+        synopsis_compact_template = open(folder_path+"/Art/Template/Synopsis Compact Template.html","r")
+        synopsis_compact_text = synopsis_compact_template.read()
+        synopsis_compact_template.close()
+        for variable_name in variables_dict_keys:
+            if variable_name == "title":
+                synopsis_compact_text = synopsis_compact_text.replace("_title_", str(variables_dict[variable_name]))
+            else:
+                synopsis_compact_text = synopsis_compact_text.replace(variable_name, str(variables_dict[variable_name]))
+        synopsis_compact = open(full_folder_path+"/Synopsis Compact.html","w")
+        synopsis_compact.write(synopsis_compact_text)
+        synopsis_compact.close()
     #Synopsis Compact
 
     #Synopsis
