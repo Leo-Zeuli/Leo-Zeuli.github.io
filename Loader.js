@@ -134,6 +134,7 @@ function load_art(per_row,number_of_rows, pieces=[]) {
         }
       }
     }
+    push_pointer(["ar"]);
   }
 
   function load_piece(source) {
@@ -198,6 +199,7 @@ function load_art(per_row,number_of_rows, pieces=[]) {
     }
     fill_piece_synopses()
   }
+  push_pointer(["ar"]);
 }
 
 function load_more(source) {
