@@ -203,6 +203,23 @@ img.compact-synopsis-image {
 }
 /* Compact */
 
+/* Art */
+/* Index Level */
+.art-flexbox-container {
+  width: min(100%, 800px);
+  margin: auto;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 5px;
+}
+/* Index Level */
+img.art-synopsis-image {
+  border-radius: 5px;
+  width: 100%;
+  object-fit: contain;
+}
+/* Art */
+
 /* */
 .flexbox-container {
   width: min(100%, 800px);
