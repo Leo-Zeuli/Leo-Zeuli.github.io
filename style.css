@@ -213,12 +213,54 @@ img.compact-synopsis-image {
   gap: 5px;
 }
 /* Index Level */
-img.art-synopsis-image {
+img.art-flexbox-image {
   border-radius: 5px;
   width: 100%;
   object-fit: contain;
 }
 /* Art */
+
+/* Collection */
+body.collection {
+  background: 
+    linear-gradient(red, transparent),
+    linear-gradient(to top left, lime, transparent),
+    linear-gradient(to top right, blue, transparent);
+  background-blend-mode: lighten;
+  background-attachment: fixed;
+  position: fixed;
+  height : 100%;
+  width : 100%;
+  margin: 0 0 0 0;
+}
+.collection-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.collection-arrow {
+  position: absolute;
+  font-size : 140px;
+  color : white;
+  font-family: Tangerine;
+  border: none;
+  background: none;
+  padding: 0 15px 35px 15px;
+  top: calc(50% - 175px/2);
+}
+.collection-arrow:hover {
+  background: rgba(255,255,255,0.5);
+}
+.collection-image {
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height : 95%;
+  max-width : calc(100% - 120px);
+}
+/* Collection */
+
 
 /* */
 .flexbox-container {
