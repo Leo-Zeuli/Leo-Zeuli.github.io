@@ -13,7 +13,7 @@ window.title("Art Markdown")
 window["bg"] = "white"
 
 variables_dict = {"title":"", "structure_title":"", "story_type":"", "blurb_text":"",
-                  "story_type_specification":"","synopsis_image_path":"",
+                  "story_type_specification":"","image_paths":"",
                   "synopsis_text":"", "wide_synopsis_text":""}
 
 def update_variables_dict():
@@ -23,7 +23,7 @@ def update_variables_dict():
     variables_dict["story_type"] = ["Art","Collection"][story_type.get()]
     variables_dict["story_type_specification"] = story_type_specification.get().strip()
     
-    variables_dict["synopsis_image_path"] = synopsis_image_path.get().strip()
+    variables_dict["image_paths"] = [image_path.get().strip() for image_path in image_paths]
 
     variables_dict["blurb_text"] = blurb_text.get("1.0","end-1c").strip()
     variables_dict["synopsis_text"] = synopsis_text.get("1.0","end-1c").strip()
@@ -32,11 +32,11 @@ def update_variables_dict():
     if story_type_specification.get().strip() == "":
         variables_dict["story_type_specification"] = variables_dict["story_type"]
 
-def select_synopsis_image():
-    file_path = filedialog.askopenfilename(initialdir="/Desktop", title="Select Synopsis Image",
-                                             filetypes=(("jpeg files", "*.jpeg"), ("jpg files", "*.jpg"),
-                                                        ("png files", "*.png"), ("svg files", "*.svg")))
-    synopsis_image_path.set(file_path)
+def select_image(string_var):
+    file_path = filedialog.askopenfilename(initialdir="/Desktop", title="Select Image",
+                                           filetypes=(("jpeg files", "*.jpeg"), ("jpg files", "*.jpg"),
+                                                      ("png files", "*.png"), ("svg files", "*.svg")))
+    string_var.set(file_path)
 
 def process_router():
     istesting = bool(testing.get())
@@ -55,18 +55,28 @@ def process():
     #Make Folder
 
     #Moving Photos
-    synopsis_image_path_tuple = os.path.splitext(synopsis_image_path.get())
-    variables_dict["synopsis_image_path_extension"] = synopsis_image_path_tuple[1]
-    if variables_dict["story_type"] == "Collection":
-        if not os.path.exists(folder_path+"/Photos/Art/"+variables_dict["structure_title"]):
-            os.mkdir(folder_path+"/Photos/Art/"+variables_dict["structure_title"])
-        try:
-            os.replace("".join(synopsis_image_path_tuple), folder_path+"/Photos/Art/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+synopsis_image_path_tuple[1])
-        except: pass
-    if variables_dict["story_type"] == "Art":
-        try:
-            os.replace("".join(synopsis_image_path_tuple), folder_path+"/Photos/Art/"+variables_dict["structure_title"]+synopsis_image_path_tuple[1])
-        except: pass
+    for img in range(len(image_paths)):
+        image_path_tuple = os.path.splitext(image_paths[img].get())
+        if img == 0:
+            variables_dict["image_path_extension"] = [image_path_tuple[1]]
+        else:
+            variables_dict["image_path_extension"].append(image_path_tuple[1])
+        if variables_dict["story_type"] == "Collection":
+            if not os.path.exists(folder_path+"/Photos/Art/"+variables_dict["structure_title"]):
+                os.mkdir(folder_path+"/Photos/Art/"+variables_dict["structure_title"])
+            try:
+                if img == 0:
+                    os.replace("".join(image_path_tuple), folder_path+"/Photos/Art/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+image_path_tuple[1])
+                else:
+                    os.replace("".join(image_path_tuple), folder_path+"/Photos/Art/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+" "+str(img)+image_path_tuple[1])
+            except: pass
+        if variables_dict["story_type"] == "Art":
+            try:
+                if img == 0:
+                    os.replace("".join(image_path_tuple), folder_path+"/Photos/Art/"+variables_dict["structure_title"]+image_path_tuple[1])
+                else:
+                    os.replace("".join(image_path_tuple), folder_path+"/Photos/Art/"+variables_dict["structure_title"]+" "+str(img)+image_path_tuple[1])
+            except: pass
         
     #Moving Photos
 
@@ -81,6 +91,8 @@ def process():
         for variable_name in variables_dict_keys:
             if variable_name == "title":
                 linked_piece_text = linked_piece_text.replace("_title_", str(variables_dict[variable_name]))
+            elif variable_name == "image_path_extension":
+                linked_piece_text = linked_piece_text.replace(variable_name, str(variables_dict[variable_name][0]))
             else:
                 linked_piece_text = linked_piece_text.replace(variable_name, str(variables_dict[variable_name]))
         linked_piece = open(full_folder_path+"/Linked Piece.html","w")
@@ -181,7 +193,10 @@ def load_markdown():
     story_type.set({"Art":0,"Collection":1}[variables_dict["story_type"]])
     story_type_specification.set(variables_dict["story_type_specification"])
     
-    synopsis_image_path.set(variables_dict["synopsis_image_path"])
+    for row in range(len(variables_dict["image_paths"])):
+        if row != 0:
+            add_image()
+        image_paths[row].set(variables_dict["image_paths"][row])
 
     blurb_text.delete("1.0","end-1c")
     blurb_text.insert("end-1c", variables_dict["blurb_text"])
@@ -207,7 +222,7 @@ Label(testing_frame, text="→", bg="white", fg="cyan").pack(side="left")
 Label(testing_frame, text="→", bg="white", fg="blue").pack(side="left")
 Label(testing_frame, text="→", bg="white", fg="purple").pack(side="left")
 testing = IntVar()
-#testing.set(1) #Not Testing Defult
+#testing.set(0) #Not Testing Defult
 testing.set(1) #Testing Defult
 Checkbutton(testing_frame, text="Testing?", variable=testing, onvalue=1, offvalue=0).pack(side="left")
 Label(testing_frame, text="←", bg="white", fg="purple").pack(side="left")
@@ -236,13 +251,23 @@ Label(story_type_frame, text="Specification : ", bg="white").pack(side="left")
 story_type_specification = StringVar()
 Entry(story_type_frame, textvariable=story_type_specification, bg="white", highlightbackground="yellow", width="18").pack(side="left")
 
+row = 0
+image_paths = []
+def add_image():
+    global row
+    row += 1
+    Label(image_frame, text="Piece/Synopsis Image", bg="white").grid(row=(row+1),column=0)
+    image_paths.append(StringVar())
+    Entry(image_frame, textvariable=image_paths[row], bg="white", width="35", highlightbackground="lawn green").grid(row=(row+1),column=1)
+    Button(image_frame, text ="Directory Select", command = lambda null : select_image(image_paths[row])).grid(row=(row+1),column=2,padx=(3,0))
 image_frame = Frame(window)
 image_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
 Label(image_frame, text="File Path /", bg="white").grid(row=0,column=1)
-Label(image_frame, text="Piece/Synopsis Image", bg="white").grid(row=1,column=0)
-synopsis_image_path = StringVar()
-Entry(image_frame, textvariable=synopsis_image_path, bg="white", width="35", highlightbackground="lawn green").grid(row=1,column=1)
-Button(image_frame, text ="Directory Select", command = select_synopsis_image).grid(row=1,column=3,padx=(3,0))
+Button(image_frame, text ="Add Image", command = add_image).grid(row=0,column=2)
+Label(image_frame, text="Piece/Synopsis Image", bg="white").grid(row=(row+1),column=0)
+image_paths.append(StringVar())
+Entry(image_frame, textvariable=image_paths[row], bg="white", width="35", highlightbackground="lawn green").grid(row=(row+1),column=1)
+Button(image_frame, text ="Directory Select", command = lambda null : select_image(image_paths[row])).grid(row=(row+1),column=2,padx=(3,0))
 
 blurb_frame = Frame(window)
 blurb_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
