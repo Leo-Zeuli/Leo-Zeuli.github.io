@@ -228,13 +228,13 @@ Button(image_frame, text ="Directory Select", command = select_synopsis_image).g
 synopsis_frame = Frame(window)
 synopsis_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
 Label(synopsis_frame, text="Synopsis", bg="white").grid(row=0,column=0)
-synopsis_text = Text(synopsis_frame, bg="white", highlightbackground="cyan", highlightcolor="cyan", height="10")
+synopsis_text = Text(synopsis_frame, bg="white", highlightbackground="cyan", height="10")
 synopsis_text.grid(row=1,column=0)
 
 wide_synopsis_frame = Frame(window)
 wide_synopsis_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
 Label(wide_synopsis_frame, text="Wide Synopsis", bg="white").grid(row=0,column=0)
-wide_synopsis_text = Text(wide_synopsis_frame, bg="white", highlightbackground="blue", highlightcolor="blue", height="10")
+wide_synopsis_text = Text(wide_synopsis_frame, bg="white", highlightbackground="blue", height="10")
 wide_synopsis_text.grid(row=1,column=0)
 
 markdown_processes_frame = Frame(window)
