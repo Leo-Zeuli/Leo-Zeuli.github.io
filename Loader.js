@@ -106,7 +106,7 @@ function load_art(per_row,number_of_rows, pieces=[]) {
     for (img of pieces_to_load) {
       ratio_sum += img[1]/img[2];
     }
-    var height = parseInt((800-10*(per_row-1))/ratio_sum);
+    var height = parseInt((800-5*(per_row-1))/ratio_sum);
     for (piece of pieces_to_load) {
       piece[0].firstElementChild.firstElementChild.setAttribute("style","max-height:"+String(height)+"px");
       compact_container.appendChild(piece[0]);
