@@ -12,25 +12,21 @@ window=Tk()
 window.title("Art Markdown")
 window["bg"] = "white"
 
-variables_dict = {"title":"", "structure_title":"", "story_type":"", "blurb_text":"",
-                  "story_type_specification":"","image_paths":"",
-                  "synopsis_text":"", "wide_synopsis_text":""}
+variables_dict = {"title":"", "structure_title":"", "blurb_text":"",
+                  "specification":"","image_paths":""}
 
 def update_variables_dict():
     global variables_dict
     variables_dict["title"] = title.get()
     variables_dict["structure_title"] = structure_title.get().strip()
-    variables_dict["story_type"] = ["Art","Collection"][story_type.get()]
-    variables_dict["story_type_specification"] = story_type_specification.get().strip()
+    variables_dict["specification"] = story_type_specification.get().strip()
     
     variables_dict["image_paths"] = [image_path.get().strip() for image_path in image_paths]
 
     variables_dict["blurb_text"] = blurb_text.get("1.0","end-1c").strip()
-    variables_dict["synopsis_text"] = synopsis_text.get("1.0","end-1c").strip()
-    variables_dict["wide_synopsis_text"] = wide_synopsis_text.get("1.0","end-1c").strip()
     
     if story_type_specification.get().strip() == "":
-        variables_dict["story_type_specification"] = variables_dict["story_type"]
+        variables_dict["specification"] = "Art"
 
 def select_image(string_var):
     file_path = filedialog.askopenfilename(initialdir="/Desktop", title="Select Image",
@@ -61,22 +57,12 @@ def process():
             variables_dict["image_path_extension"] = [image_path_tuple[1]]
         else:
             variables_dict["image_path_extension"].append(image_path_tuple[1])
-        if variables_dict["story_type"] == "Collection":
-            if not os.path.exists(folder_path+"/Photos/Art/"+variables_dict["structure_title"]):
-                os.mkdir(folder_path+"/Photos/Art/"+variables_dict["structure_title"])
-            try:
-                if img == 0:
-                    os.replace("".join(image_path_tuple), folder_path+"/Photos/Art/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+image_path_tuple[1])
-                else:
-                    os.replace("".join(image_path_tuple), folder_path+"/Photos/Art/"+variables_dict["structure_title"]+"/"+variables_dict["structure_title"]+" "+str(img)+image_path_tuple[1])
-            except: pass
-        if variables_dict["story_type"] == "Art":
-            try:
-                if img == 0:
-                    os.replace("".join(image_path_tuple), folder_path+"/Photos/Art/"+variables_dict["structure_title"]+image_path_tuple[1])
-                else:
-                    os.replace("".join(image_path_tuple), folder_path+"/Photos/Art/"+variables_dict["structure_title"]+" "+str(img)+image_path_tuple[1])
-            except: pass
+        try:
+            if img == 0:
+                os.replace("".join(image_path_tuple), folder_path+"/Photos/Art/"+variables_dict["structure_title"]+image_path_tuple[1])
+            else:
+                os.replace("".join(image_path_tuple), folder_path+"/Photos/Art/"+variables_dict["structure_title"]+" "+str(img)+image_path_tuple[1])
+        except: pass
         
     #Moving Photos
 
@@ -84,93 +70,46 @@ def process():
     variables_dict_keys.sort(reverse = True, key = (lambda dict_key: len(dict_key)))
 
     #Linked Piece
-    if variables_dict["story_type"] == "Art":
-        linked_piece_template = open(folder_path+"/Art/Template/Linked Piece Template.html","r")
-        linked_piece_text = linked_piece_template.read()
-        linked_piece_template.close()
-        for variable_name in variables_dict_keys:
-            if variable_name == "title":
-                linked_piece_text = linked_piece_text.replace("_title_", str(variables_dict[variable_name]))
-            elif variable_name == "image_path_extension":
-                linked_piece_text = linked_piece_text.replace(variable_name, str(variables_dict[variable_name][0]))
-            else:
-                linked_piece_text = linked_piece_text.replace(variable_name, str(variables_dict[variable_name]))
-        linked_piece = open(full_folder_path+"/Linked Piece.html","w")
-        linked_piece.write(linked_piece_text)
-        linked_piece.close()
+    linked_piece_template = open(folder_path+"/Art/Template/Linked Piece Template.html","r")
+    linked_piece_text = linked_piece_template.read()
+    linked_piece_template.close()
+    for variable_name in variables_dict_keys:
+        if variable_name == "title":
+            linked_piece_text = linked_piece_text.replace("_title_", str(variables_dict[variable_name]))
+        elif variable_name == "image_path_extension":
+            linked_piece_text = linked_piece_text.replace(variable_name, str(variables_dict[variable_name][0]))
+        else:
+            linked_piece_text = linked_piece_text.replace(variable_name, str(variables_dict[variable_name]))
+    linked_piece = open(full_folder_path+"/Linked Piece.html","w")
+    linked_piece.write(linked_piece_text)
+    linked_piece.close()
     #Linked Piece
-    
-    #Synopsis Compact
-    if variables_dict["story_type"] == "Collection":
-        synopsis_compact_template = open(folder_path+"/Art/Template/Synopsis Compact Template.html","r")
-        synopsis_compact_text = synopsis_compact_template.read()
-        synopsis_compact_template.close()
-        for variable_name in variables_dict_keys:
-            if variable_name == "title":
-                synopsis_compact_text = synopsis_compact_text.replace("_title_", str(variables_dict[variable_name]))
-            else:
-                synopsis_compact_text = synopsis_compact_text.replace(variable_name, str(variables_dict[variable_name]))
-        synopsis_compact = open(full_folder_path+"/Synopsis Compact.html","w")
-        synopsis_compact.write(synopsis_compact_text)
-        synopsis_compact.close()
-    #Synopsis Compact
-
-    #Synopsis
-    if variables_dict["story_type"] == "Collection":
-        synopsis_template = open(folder_path+"/Art/Template/Synopsis Template.html","r")
-        synopsis_text = synopsis_template.read()
-        synopsis_template.close()
-        for variable_name in variables_dict_keys:
-            if variable_name == "title":
-                synopsis_text = synopsis_text.replace("_title_", str(variables_dict[variable_name]))
-            else:
-                synopsis_text = synopsis_text.replace(variable_name, str(variables_dict[variable_name]))
-        synopsis = open(full_folder_path+"/Synopsis.html","w")
-        synopsis.write(synopsis_text)
-        synopsis.close()
-    #Synopsis
-
-    #Synopsis Wide
-    if variables_dict["story_type"] == "Collection":
-        synopsis_wide_template = open(folder_path+"/Art/Template/Synopsis Wide Template.html","r")
-        synopsis_wide_text = synopsis_wide_template.read()
-        synopsis_wide_template.close()
-        for variable_name in variables_dict_keys:
-            if variable_name == "title":
-                synopsis_wide_text = synopsis_wide_text.replace("_title_", str(variables_dict[variable_name]))
-            else:
-                synopsis_wide_text = synopsis_wide_text.replace(variable_name, str(variables_dict[variable_name]))
-        synopsis_wide = open(full_folder_path+"/Synopsis Wide.html","w")
-        synopsis_wide.write(synopsis_wide_text)
-        synopsis_wide.close()
-    #Synopsis Wide
 
     #Art
-    if variables_dict["story_type"] == "Art":
-        art_template = open(folder_path+"/Art/Template/Art Template.html","r")
-        art_html = art_template.read()
-        art_template.close()
-        art_html = art_html.replace("time",time)
-        for variable_name in variables_dict_keys:
-            if variable_name == "blurb_text":
-                formated_blurb_text = ""
-                for paragraph in variables_dict[variable_name].splitlines():
-                    if paragraph:
-                        formated_blurb_text += ('<p class="general">'+paragraph+"</p>")
-                art_html = art_html.replace('<p class="general"></p>',formated_blurb_text)
-            elif variable_name == "title":
-                art_html = art_html.replace("_title_", str(variables_dict[variable_name]))
-            else:
-                art_html = art_html.replace(variable_name, str(variables_dict[variable_name]))
-        art = open(full_folder_path+".html","w")
-        art.write(art_html)
-        art.close()
+    art_template = open(folder_path+"/Art/Template/Art Template.html","r")
+    art_html = art_template.read()
+    art_template.close()
+    art_html = art_html.replace("time",time)
+    for variable_name in variables_dict_keys:
+        if variable_name == "blurb_text":
+            formated_blurb_text = ""
+            for paragraph in variables_dict[variable_name].splitlines():
+                if paragraph:
+                    formated_blurb_text += ('<p class="general">'+paragraph+"</p>")
+            art_html = art_html.replace('<p class="general"></p>',formated_blurb_text)
+        elif variable_name == "title":
+            art_html = art_html.replace("_title_", str(variables_dict[variable_name]))
+        else:
+            art_html = art_html.replace(variable_name, str(variables_dict[variable_name]))
+    art = open(full_folder_path+".html","w")
+    art.write(art_html)
+    art.close()
     #Art
 
     #Art Loader
     feature_loader = open(folder_path+"/Loader.js")
     lines = feature_loader.readlines()
-    lines[0] = lines[0][:16] + '["'+variables_dict["structure_title"]+'","'+{"Art":"ar","Collection":"c"}[variables_dict["story_type"]]+'"],' + lines[0][16:]
+    lines[0] = lines[0][:16] + '["'+variables_dict["structure_title"]+'","ar"],' + lines[0][16:]
     feature_loader.close()
     feature_loader = open(folder_path+"/Loader.js","w")
     feature_loader.writelines(lines)
@@ -190,8 +129,7 @@ def load_markdown():
     
     title.set(variables_dict["title"])
     structure_title.set(variables_dict["structure_title"])
-    story_type.set({"Art":0,"Collection":1}[variables_dict["story_type"]])
-    story_type_specification.set(variables_dict["story_type_specification"])
+    specification.set(variables_dict["specification"])
     
     for row in range(len(variables_dict["image_paths"])):
         if row != 0:
@@ -200,10 +138,6 @@ def load_markdown():
 
     blurb_text.delete("1.0","end-1c")
     blurb_text.insert("end-1c", variables_dict["blurb_text"])
-    synopsis_text.delete("1.0","end-1c")
-    synopsis_text.insert("end-1c", variables_dict["synopsis_text"])
-    wide_synopsis_text.delete("1.0","end-1c")
-    wide_synopsis_text.insert("end-1c", variables_dict["wide_synopsis_text"])
 
 def save_markdown():
     update_variables_dict()
@@ -244,19 +178,16 @@ Entry(title_frame, textvariable=structure_title, bg="white", width="40", highlig
 
 story_type_frame = Frame(window)
 story_type_frame.pack(padx=(10, 10), pady=(2,2), anchor="center")
-story_type = IntVar()
-Radiobutton(story_type_frame, text="Art", variable=story_type, value=0).pack(side="left")
-Radiobutton(story_type_frame, text="Collection", variable=story_type, value=1).pack(side="left")
 Label(story_type_frame, text="Specification : ", bg="white").pack(side="left")
-story_type_specification = StringVar()
-Entry(story_type_frame, textvariable=story_type_specification, bg="white", highlightbackground="yellow", width="18").pack(side="left")
+specification = StringVar()
+Entry(story_type_frame, textvariable=specification, bg="white", highlightbackground="yellow", width="18").pack(side="left")
 
 row = 0
 image_paths = []
 def add_image():
     global row
     row += 1
-    Label(image_frame, text="Piece/Synopsis Image", bg="white").grid(row=(row+1),column=0)
+    Label(image_frame, text="Piece Image", bg="white").grid(row=(row+1),column=0)
     image_paths.append(StringVar())
     Entry(image_frame, textvariable=image_paths[row], bg="white", width="35", highlightbackground="lawn green").grid(row=(row+1),column=1)
     Button(image_frame, text ="Directory Select", command = lambda null : select_image(image_paths[row])).grid(row=(row+1),column=2,padx=(3,0))
@@ -264,28 +195,16 @@ image_frame = Frame(window)
 image_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
 Label(image_frame, text="File Path /", bg="white").grid(row=0,column=1)
 Button(image_frame, text ="Add Image", command = add_image).grid(row=0,column=2)
-Label(image_frame, text="Piece/Synopsis Image", bg="white").grid(row=(row+1),column=0)
+Label(image_frame, text="Piece Image", bg="white").grid(row=(row+1),column=0)
 image_paths.append(StringVar())
 Entry(image_frame, textvariable=image_paths[row], bg="white", width="35", highlightbackground="lawn green").grid(row=(row+1),column=1)
 Button(image_frame, text ="Directory Select", command = lambda null : select_image(image_paths[row])).grid(row=(row+1),column=2,padx=(3,0))
 
 blurb_frame = Frame(window)
 blurb_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
-Label(blurb_frame, text="Art Blurb (Art Only)", bg="white").grid(row=0,column=0)
+Label(blurb_frame, text="Art Blurb", bg="white").grid(row=0,column=0)
 blurb_text = Text(blurb_frame, bg="white", highlightbackground="cyan", highlightcolor="cyan", height="10")
 blurb_text.grid(row=1,column=0)
-
-synopsis_frame = Frame(window)
-synopsis_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
-Label(synopsis_frame, text="Synopsis (Collection Only)", bg="white").grid(row=0,column=0)
-synopsis_text = Text(synopsis_frame, bg="white", highlightbackground="blue", highlightcolor="cyan", height="10")
-synopsis_text.grid(row=1,column=0)
-
-wide_synopsis_frame = Frame(window)
-wide_synopsis_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
-Label(wide_synopsis_frame, text="Wide Synopsis (Collection Only)", bg="white").grid(row=0,column=0)
-wide_synopsis_text = Text(wide_synopsis_frame, bg="white", highlightbackground="purple", highlightcolor="blue", height="10")
-wide_synopsis_text.grid(row=1,column=0)
 
 markdown_processes_frame = Frame(window)
 markdown_processes_frame.pack(padx=(10, 10), pady=(2,2), anchor="center")
