@@ -176,11 +176,11 @@ Label(title_frame, text="Structure Title : ", bg="white", justify="left").grid(r
 structure_title = StringVar()
 Entry(title_frame, textvariable=structure_title, bg="white", width="40", highlightbackground="orange").grid(row=1,column=1)
 
-story_type_frame = Frame(window)
-story_type_frame.pack(padx=(10, 10), pady=(2,2), anchor="center")
-Label(story_type_frame, text="Specification : ", bg="white").pack(side="left")
+specification_frame = Frame(window)
+specification_frame.pack(padx=(10, 10), pady=(2,2), anchor="center")
+Label(specification_frame, text="Specification : ", bg="white").pack(side="left")
 specification = StringVar()
-Entry(story_type_frame, textvariable=specification, bg="white", highlightbackground="yellow", width="18").pack(side="left")
+Entry(specification_frame, textvariable=specification, bg="white", highlightbackground="yellow", width="18").pack(side="left")
 
 row = 0
 image_paths = []
@@ -203,7 +203,7 @@ Button(image_frame, text ="Directory Select", command = lambda null : select_ima
 blurb_frame = Frame(window)
 blurb_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
 Label(blurb_frame, text="Art Blurb", bg="white").grid(row=0,column=0)
-blurb_text = Text(blurb_frame, bg="white", highlightbackground="cyan", highlightcolor="cyan", height="10")
+blurb_text = Text(blurb_frame, bg="white", highlightbackground="cyan", height="10")
 blurb_text.grid(row=1,column=0)
 
 markdown_processes_frame = Frame(window)
