@@ -45,15 +45,18 @@ def select_article_txt():
     article_txt_path.set(file_path)
 def select_feature_image():
     file_path = filedialog.askopenfilename(initialdir="/Desktop", title="Select Feature Image",
-                                             filetypes=(("jpeg files", "*.jpeg"), ("jpg files", "*.jpg"), ("png files", "*.png")))
+                                             filetypes=(("jpeg files", "*.jpeg"), ("jpg files", "*.jpg"),
+                                                        ("png files", "*.png"), ("svg files", "*.svg")))
     feature_image_path.set(file_path)
 def select_wide_image():
     file_path = filedialog.askopenfilename(initialdir="/Desktop", title="Select Wide Image",  
-                                             filetypes=(("jpeg files", "*.jpeg"), ("jpg files", "*.jpg"), ("png files", "*.png")))
+                                             filetypes=(("jpeg files", "*.jpeg"), ("jpg files", "*.jpg"),
+                                                        ("png files", "*.png"), ("svg files", "*.svg")))
     wide_image_path.set(file_path)
 def select_star_image():
     file_path = filedialog.askopenfilename(initialdir="/Desktop", title="Select Star Image",
-                                             filetypes=(("jpeg files", "*.jpeg"), ("jpg files", "*.jpg"), ("png files", "*.png")))
+                                             filetypes=(("jpeg files", "*.jpeg"), ("jpg files", "*.jpg"),
+                                                        ("png files", "*.png"), ("svg files", "*.svg")))
     star_image_path.set(file_path)
 
 def process_router():
