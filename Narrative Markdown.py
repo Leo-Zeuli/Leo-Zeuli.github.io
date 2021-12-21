@@ -71,6 +71,8 @@ def process():
         if variable_name == "synopsis_image_source":
             if variables_dict["synopsis_image_source"]:
                 synopsis_compact_text = synopsis_compact_text.replace("synopsis_image_source", "Image: "+variables_dict["synopsis_image_source"])
+            elif variable_name == "title":
+                article_text = article_text.replace("_title_", str(variables_dict[variable_name]))
             else:
                 synopsis_compact_text = synopsis_compact_text.replace("synopsis_image_source", "")
         else:
@@ -88,6 +90,8 @@ def process():
         if variable_name == "synopsis_image_source":
             if variables_dict["synopsis_image_source"]:
                 synopsis_text = synopsis_text.replace("synopsis_image_source", "Image: "+variables_dict["synopsis_image_source"])
+            elif variable_name == "title":
+                article_text = article_text.replace("_title_", str(variables_dict[variable_name]))
             else:
                 synopsis_text = synopsis_text.replace("synopsis_image_source", "")
         else:
@@ -105,6 +109,8 @@ def process():
         if variable_name == "synopsis_image_source":
             if variables_dict["synopsis_image_source"]:
                 synopsis_wide_text = synopsis_wide_text.replace("synopsis_image_source", "Image: "+variables_dict["synopsis_image_source"])
+            elif variable_name == "title":
+                article_text = article_text.replace("_title_", str(variables_dict[variable_name]))
             else:
                 synopsis_wide_text = synopsis_wide_text.replace("synopsis_image_source", "")
         else:
