@@ -97,6 +97,13 @@ a.header {
 
 /* About CSS */
 
+.link {
+  text-decoration: underline;
+  color: black;
+}
+
+.link:hover {color: red}
+
 /* Feature CSS */
 
 .general {

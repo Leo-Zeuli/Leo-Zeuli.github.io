@@ -129,7 +129,7 @@ def process():
         piece_html = piece_file.read()
         piece_file.close()
         split_index = piece_html.rfind("</p>")
-        add_to_piece = "</p><p class='general'>Part of <a class='feature-link' href='/Art/"+variables_dict["structure_title"]+"'>"+variables_dict["title"]+" Collection</a>."
+        add_to_piece = "</p><p class='general'>Part of <a class='link' href='/Art/"+variables_dict["structure_title"]+"'>"+variables_dict["title"]+" Collection</a>."
         piece_file = open(folder_path+"/Art/"+piece+".html","w")
         piece_file.write(piece_html[:split_index]+add_to_piece+piece_html[split_index:])
         piece_file.close()
