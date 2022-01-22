@@ -19,13 +19,13 @@ def update_variables_dict():
     global variables_dict
     variables_dict["title"] = title.get()
     variables_dict["structure_title"] = structure_title.get().strip()
-    variables_dict["specification"] = story_type_specification.get().strip()
+    variables_dict["specification"] = specification.get().strip()
     
     variables_dict["image_paths"] = [image_path.get().strip() for image_path in image_paths]
 
     variables_dict["blurb_text"] = blurb_text.get("1.0","end-1c").strip()
     
-    if story_type_specification.get().strip() == "":
+    if specification.get().strip() == "":
         variables_dict["specification"] = "Art"
 
 def select_image(string_var):
@@ -190,7 +190,7 @@ def add_image():
     Label(image_frame, text="Piece Image", bg="white").grid(row=(row+1),column=0)
     image_paths.append(StringVar())
     Entry(image_frame, textvariable=image_paths[row], bg="white", width="35", highlightbackground="lawn green").grid(row=(row+1),column=1)
-    Button(image_frame, text ="Directory Select", command = lambda null : select_image(image_paths[row])).grid(row=(row+1),column=2,padx=(3,0))
+    Button(image_frame, text ="Directory Select", command = lambda : select_image(image_paths[row])).grid(row=(row+1),column=2,padx=(3,0))
 image_frame = Frame(window)
 image_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")
 Label(image_frame, text="File Path /", bg="white").grid(row=0,column=1)
@@ -198,7 +198,7 @@ Button(image_frame, text ="Add Image", command = add_image).grid(row=0,column=2)
 Label(image_frame, text="Piece Image", bg="white").grid(row=(row+1),column=0)
 image_paths.append(StringVar())
 Entry(image_frame, textvariable=image_paths[row], bg="white", width="35", highlightbackground="lawn green").grid(row=(row+1),column=1)
-Button(image_frame, text ="Directory Select", command = lambda null : select_image(image_paths[row])).grid(row=(row+1),column=2,padx=(3,0))
+Button(image_frame, text ="Directory Select", command = lambda : select_image(image_paths[0])).grid(row=(1),column=2,padx=(3,0))
 
 blurb_frame = Frame(window)
 blurb_frame.pack(padx=(10, 10), pady=(2,2), anchor="w")

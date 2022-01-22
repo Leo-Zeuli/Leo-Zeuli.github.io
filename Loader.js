@@ -1,4 +1,4 @@
-var features = [["Fight Club","a"],["I want to feel fear","p"],["Watchmen","a"],["Scooby Doo!","a"],["Feelings","c"],["Drunk Skeletons","ar"],["Humanoid","ar"],["Space Nightmare","ar"],["Sensation","ar"],["Revolution Storyboard","s"],["Books and Movies","a"],["Black Widow","a"],["Bored to Death","r"],["Bored to Death S1","r"],["Texas Chainsaw Massacre","a"],["Blade Runner 2049","a"],["Loki","r"]];
+var features = [["Mask and Wolf","ar"],["Fight Club","a"],["I want to feel fear","p"],["Watchmen","a"],["Scooby Doo!","a"],["Feelings","c"],["Drunk Skeletons","ar"],["Humanoid","ar"],["Space Nightmare","ar"],["Sensation","ar"],["Revolution Storyboard","s"],["Books and Movies","a"],["Black Widow","a"],["Bored to Death","r"],["Bored to Death S1","r"],["Texas Chainsaw Massacre","a"],["Blade Runner 2049","a"],["Loki","r"]];
 var features_loaded = new Array(features.length).fill(false);
 
 var pointer = 0;
