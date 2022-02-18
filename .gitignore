@@ -1,7 +1,5 @@
 *.DS_Store
 Task List.txt
-Previous Article Markdown.txt
-Previous Narrative Markdown.txt
-Previous Art Markdown.txt
-Previous Collection Markdown.txt
+*Markdown.txt
 Auxiliary/**
+package.json
