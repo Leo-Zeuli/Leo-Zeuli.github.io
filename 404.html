@@ -1,16 +1,21 @@
-<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link href="/archived/style.css" rel="stylesheet" type="text/css" />
+</head>
+  
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <link href="/style.css" rel="stylesheet" type="text/css" />
-  </head>
-</html>
-<html>
-  <div class="HTTP404">
-    404
+  <div class="header">
+    Redirecting...
   </div>
   <p style="text-align: center;">
-    This is not the page you're looking for (at least I hope its not)
+    Your being redirected to the rebranded site at <a href="https://leo-witzke.github.io/"
+      class="link">leo-witzke.github.io</a>. The old site can be accessed at <a
+      href="https://leo-zeuli.github.io/archived" class="link">leo-zeuli.github.io/archived</a>.
   </p>
+  <script>
+    if (location.pathname.indexOf("/archived") != 0) {
+        window.location.replace("http://leo-witzke.github.io"+location.pathname);
+    }
+  </script>
 </html>
